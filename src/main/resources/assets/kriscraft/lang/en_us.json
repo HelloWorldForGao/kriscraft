@@ -1,0 +1,13 @@
+{
+  "kriscraft.eatmoss" : "Your HP was mossed out",
+  "block.kriscraft.moss_bed" : "Moss bed",
+  "item.kriscraft.moss_bed" : "Moss bed",
+  "kriscraft.advancement.krisroot.title" : "Kris craft",
+  "kriscraft.advancement.krisroot.description" : "Make the moss more useful",
+  "kriscraft.advancement.kris15.title" : "MOSS FINDER",
+  "kriscraft.advancement.kris15.description" : "Eat 15 moss",
+  "kriscraft.advancement.kris300.title" : "MOSS MOST",
+  "kriscraft.advancement.kris300.description" : "Eat 300 moss",
+  "kriscraft.advancement.kris30000.title" : "Kris-self",
+  "kriscraft.advancement.kris30000.description" : "I will be a Minecraft player forever if I can eat 30000 moss every day."
+}

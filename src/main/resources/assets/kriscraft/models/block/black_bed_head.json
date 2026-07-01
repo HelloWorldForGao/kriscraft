@@ -1,0 +1,8 @@
+{
+  "parent": "kriscraft:block/template_bed_head",
+  "textures": {
+    "east": "kriscraft:block/moss_bed_head_east",
+    "up": "kriscraft:block/moss_bed_head_up",
+    "west": "kriscraft:block/moss_bed_head_west"
+  }
+}
