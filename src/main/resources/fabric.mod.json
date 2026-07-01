@@ -20,9 +20,6 @@
       "io.hwfg.kriscraft.datagen.Datagen"
     ]
   },
-  "mixins": [
-    "kriscraft.mixins.json"
-  ],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-language-kotlin": ">=${kotlin_loader_version}",
