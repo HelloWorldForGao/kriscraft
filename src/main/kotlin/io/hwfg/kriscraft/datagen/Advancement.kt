@@ -8,19 +8,17 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType
-import net.minecraft.advancements.CriteriaTriggers
-import net.minecraft.advancements.criterion.UsingItemTrigger
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.Items
-import java.util.Optional
+import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
 class Advancement(
-    val output : FabricDataOutput,
-    val registryLookup : CompletableFuture<HolderLookup.Provider>
+    output : FabricDataOutput,
+    registryLookup : CompletableFuture<HolderLookup.Provider>
 ) : FabricAdvancementProvider(output,registryLookup) {
     override fun generateAdvancement(
         registryLookup: HolderLookup.Provider,

@@ -12,8 +12,8 @@ import net.minecraft.world.item.Items
 import java.util.concurrent.CompletableFuture
 
 class Recipe(
-    val output : FabricDataOutput,
-    val registryLookup : CompletableFuture<HolderLookup.Provider>
+    output : FabricDataOutput,
+    registryLookup : CompletableFuture<HolderLookup.Provider>
 ) : FabricRecipeProvider(output,registryLookup) {
     override fun createRecipeProvider(
         registryLookup: HolderLookup.Provider,
