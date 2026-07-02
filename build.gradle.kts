@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "2.4.0"
-    id("fabric-loom") version "1.17.12"
+    id("net.fabricmc.fabric-loom") version "1.17.12"
     id("maven-publish")
 }
 
@@ -20,7 +20,7 @@ java {
     // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
     // if it is present.
     // If you remove this line, sources will not be generated.
-    withSourcesJar()
+    //withSourcesJar()
 }
 
 
@@ -37,12 +37,12 @@ repositories {
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft("com.mojang:minecraft:${project.property("minecraft_version")}")
-    mappings(loom.officialMojangMappings())
-    modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
-    modImplementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
+    //mappings(loom.officialMojangMappings())
+    implementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
+    implementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
 
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
-    implementation(kotlin("stdlib-jdk8"))
+    implementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
+    compileOnly(kotlin("stdlib-jdk8"))
 }
 
 fabricApi {
@@ -104,5 +104,5 @@ publishing {
     }
 }
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(25)
 }
