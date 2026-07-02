@@ -1,7 +1,5 @@
 package io.hwfg.kriscraft
 
-import io.hwfg.kriscraft.Core.addAndGet
-import io.hwfg.kriscraft.Core.isHanding
 import io.hwfg.kriscraft.mossbed.MossBedBlockEntity
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents
@@ -27,11 +25,10 @@ class Kriscraft : ModInitializer {
         if (player.getItemInHand(hand).item == Items.MOSS_BLOCK){
             player.heal(20.0F)
             if (!player.isInvulnerable) player.getItemInHand(hand).shrink(1)
-            player.displayClientMessage(
-                Component.translatable("kriscraft.eatmoss"),
-                true
-            )
             if (!level.isClientSide){
+                player.sendOverlayMessage(
+                    Component.translatable("kriscraft.eatmoss")
+                )
                 val serverPlayer = player as ServerPlayer
                 val mossCount = serverPlayer.getAttached(Core.mossCount) ?: 0
                 val newCount = mossCount + 1
@@ -45,7 +42,6 @@ class Kriscraft : ModInitializer {
     fun eatBlockMoss(
         player: Player,
         level : Level,
-        hand : InteractionHand,
         result: BlockHitResult
     ): InteractionResult {
         if (level.getBlockState(result.blockPos).block.asItem() == Items.MOSS_BLOCK){
@@ -55,11 +51,10 @@ class Kriscraft : ModInitializer {
                 Blocks.AIR.defaultBlockState(),
                 0
             )
-            player.displayClientMessage(
-                Component.translatable("kriscraft.eatmoss"),
-                true
-            )
             if (!level.isClientSide){
+                player.sendOverlayMessage(
+                    Component.translatable("kriscraft.eatmoss")
+                )
                 val serverPlayer = player as ServerPlayer
                 val mossCount = serverPlayer.getAttached(Core.mossCount) ?: 0
                 val newCount = mossCount + 1
@@ -81,7 +76,7 @@ class Kriscraft : ModInitializer {
             eatMoss(player, level, hand)
         }
         UseBlockCallback.EVENT.register { player, level, interactionHand, result ->
-            eatBlockMoss(player, level,interactionHand,result)
+            eatBlockMoss(player, level, result)
         }
         EntitySleepEvents.START_SLEEPING.register { entity, pos ->
             if (entity is ServerPlayer){

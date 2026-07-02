@@ -12,7 +12,7 @@ data class SleepMossCondition(
 ) : SimpleCriterionTrigger.SimpleInstance {
     override fun player(): Optional<ContextAwarePredicate> = p0
     companion object{
-        val codec = RecordCodecBuilder.create { p0 ->
+        val codec: Codec<SleepMossCondition> = RecordCodecBuilder.create { p0 ->
             p0.group(
                 ContextAwarePredicate.CODEC.optionalFieldOf("player").forGetter(SleepMossCondition::p0),
                 Codec.INT.fieldOf("targetTime").forGetter(SleepMossCondition::targetTime)

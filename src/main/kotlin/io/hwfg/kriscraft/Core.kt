@@ -11,7 +11,7 @@ import io.hwfg.kriscraft.mossbed.MossBedBlock
 import io.hwfg.kriscraft.sleepmoss.SleepMossCriterion
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
+import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents
 import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.core.Holder
@@ -144,11 +144,19 @@ object Core {
     }
     fun Player.isHanding(hand : InteractionHand,item : Item) : Boolean = this.getItemInHand(hand).item == item
     fun init(){
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register { p0 ->
-            p0.addAfter(Items.GREEN_BED,mossBedBlock.asItem())
-        }
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register { p0 ->
-            p0.addAfter(Items.BREAD,mossBread,mossBurger)
-        }
+//        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register { p0 ->
+//            p0.addAfter(Items.GREEN_BED,mossBedBlock.asItem())
+//        }
+//        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register { p0 ->
+//            p0.addAfter(Items.BREAD,mossBread,mossBurger)
+//        }
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS)
+            .register { p0 ->
+                p0.insertAfter(Items.GREEN_BED,mossBedBlock.asItem())
+            }
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS)
+            .register { p0 ->
+                p0.insertAfter(Items.BREAD,mossBread,mossBurger)
+            }
     }
 }

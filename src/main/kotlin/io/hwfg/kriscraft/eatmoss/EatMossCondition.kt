@@ -4,9 +4,7 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.advancements.criterion.ContextAwarePredicate
 import net.minecraft.advancements.criterion.SimpleCriterionTrigger
-import net.minecraft.server.level.ServerPlayer
-import org.spongepowered.asm.mixin.injection.Constant
-import java.util.Optional
+import java.util.*
 
 data class EatMossCondition(
     val p0 : Optional<ContextAwarePredicate>,

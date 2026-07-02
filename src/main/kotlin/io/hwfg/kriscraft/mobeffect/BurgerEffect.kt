@@ -16,11 +16,10 @@ class BurgerEffect : MobEffect(MobEffectCategory.BENEFICIAL,0x00FF00) {
         i: Int
     ): Boolean {
         if (livingEntity is ServerPlayer){
-            livingEntity.displayClientMessage(
+            livingEntity.sendOverlayMessage(
                 Component.translatable("kriscraft.zhizhanzhishang")
                     .withStyle(ChatFormatting.RED)
-                    .withStyle(ChatFormatting.BOLD),
-                true
+                    .withStyle(ChatFormatting.BOLD)
             )
             livingEntity.heal(0.3F)
         }

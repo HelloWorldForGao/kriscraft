@@ -1,7 +1,7 @@
 package io.hwfg.kriscraft.datagen
 
 import io.hwfg.kriscraft.Core
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
@@ -12,7 +12,7 @@ import net.minecraft.world.item.Items
 import java.util.concurrent.CompletableFuture
 
 class Recipe(
-    output : FabricDataOutput,
+    output : FabricPackOutput,
     registryLookup : CompletableFuture<HolderLookup.Provider>
 ) : FabricRecipeProvider(output,registryLookup) {
     override fun createRecipeProvider(
