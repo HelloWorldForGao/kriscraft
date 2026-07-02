@@ -1,6 +1,9 @@
 package io.hwfg.kriscraft.mobeffect
 
+import io.hwfg.kriscraft.Core
+import io.hwfg.kriscraft.Core.addAndGet
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.entity.LivingEntity

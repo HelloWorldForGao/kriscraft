@@ -2,17 +2,20 @@ package io.hwfg.kriscraft.datagen
 
 import io.hwfg.kriscraft.Core
 import io.hwfg.kriscraft.eatmoss.EatMossCondition
+import io.hwfg.kriscraft.eatmossbread.EatMossBreadCondition
 import io.hwfg.kriscraft.sleepmoss.SleepMossCondition
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType
+import net.minecraft.advancements.criterion.ConsumeItemTrigger
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.Items
-import java.util.*
+import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
@@ -24,6 +27,8 @@ class Advancement(
         registryLookup: HolderLookup.Provider,
         consumer: Consumer<AdvancementHolder>
     ) {
+        val itemLookup = registryLookup.lookupOrThrow(Registries.ITEM)
+
         val krisRoot = Advancement.Builder.advancement()
             .display(
                 Items.MOSS_BLOCK,
@@ -37,6 +42,8 @@ class Advancement(
             )
             .addCriterion("krisroot", Core.eatMossCriterion.createCriterion(EatMossCondition(Optional.empty(), 5)))
             .save(consumer, Identifier.fromNamespaceAndPath("kriscraft","krisroot").toString())
+
+
         val kris15 = Advancement.Builder.advancement()
             .parent(krisRoot)
             .display(
@@ -79,6 +86,8 @@ class Advancement(
             )
             .addCriterion("kris30000", Core.eatMossCriterion.createCriterion(EatMossCondition(Optional.empty(), 30000)))
             .save(consumer, Identifier.fromNamespaceAndPath("kriscraft","kris30000").toString())
+
+
         val sleepMoss = Advancement.Builder.advancement()
             .parent(krisRoot)
             .display(
@@ -91,8 +100,8 @@ class Advancement(
                 true,
                 true
             )
-            .addCriterion("sleepmoss",Core.sleepMossCriterion.createCriterion(SleepMossCondition(Optional.empty(),1)))
-            .save(consumer,Identifier.fromNamespaceAndPath("kriscraft","sleepmoss").toString())
+            .addCriterion("sleepmoss", Core.sleepMossCriterion.createCriterion(SleepMossCondition(Optional.empty(), 1)))
+            .save(consumer, Identifier.fromNamespaceAndPath("kriscraft","sleepmoss").toString())
         val sleepMoss5 = Advancement.Builder.advancement()
             .parent(sleepMoss)
             .display(
@@ -105,8 +114,8 @@ class Advancement(
                 true,
                 true
             )
-            .addCriterion("sleepmoss5",Core.sleepMossCriterion.createCriterion(SleepMossCondition(Optional.empty(),5)))
-            .save(consumer,Identifier.fromNamespaceAndPath("kriscraft","sleepmoss5").toString())
+            .addCriterion("sleepmoss5", Core.sleepMossCriterion.createCriterion(SleepMossCondition(Optional.empty(), 5)))
+            .save(consumer, Identifier.fromNamespaceAndPath("kriscraft","sleepmoss5").toString())
         val sleepMoss31 = Advancement.Builder.advancement()
             .parent(sleepMoss5)
             .display(
@@ -119,8 +128,9 @@ class Advancement(
                 true,
                 true
             )
-            .addCriterion("sleepmoss31",Core.sleepMossCriterion.createCriterion(SleepMossCondition(Optional.empty(),31)))
-            .save(consumer,Identifier.fromNamespaceAndPath("kriscraft","sleepmoss31").toString())
+            .addCriterion("sleepmoss31",
+                Core.sleepMossCriterion.createCriterion(SleepMossCondition(Optional.empty(), 31)))
+            .save(consumer, Identifier.fromNamespaceAndPath("kriscraft","sleepmoss31").toString())
         val sleepMoss365 = Advancement.Builder.advancement()
             .parent(sleepMoss31)
             .display(
@@ -133,7 +143,109 @@ class Advancement(
                 true,
                 true
             )
-            .addCriterion("sleepmoss365",Core.sleepMossCriterion.createCriterion(SleepMossCondition(Optional.empty(),365)))
-            .save(consumer,Identifier.fromNamespaceAndPath("kriscraft","sleepmoss365").toString())
+            .addCriterion("sleepmoss365",
+                Core.sleepMossCriterion.createCriterion(SleepMossCondition(Optional.empty(), 365)))
+            .save(consumer, Identifier.fromNamespaceAndPath("kriscraft","sleepmoss365").toString())
+
+
+        val eatMossBread1 = Advancement.Builder.advancement()
+            .parent(krisRoot)
+            .display(
+                Core.mossBedBlock.asItem(),
+                Component.translatable("kriscraft.advancement.eatmossbread1.title"),
+                Component.translatable("kriscraft.advancement.eatmossbread1.description"),
+                null,
+                AdvancementType.TASK,
+                true,
+                true,
+                true
+            )
+            .addCriterion(
+                "eatmoss",
+                ConsumeItemTrigger.TriggerInstance.usedItem(
+                    itemLookup,
+                    Core.mossBread
+                )
+            )
+            .save(
+                consumer,
+                "kriscraft:eat_moss_bread1"
+            )
+        val eatMossBread15 = Advancement.Builder.advancement()
+            .parent(eatMossBread1)
+            .display(
+                Core.mossBedBlock.asItem(),
+                Component.translatable("kriscraft.advancement.eatmossbread15.title"),
+                Component.translatable("kriscraft.advancement.eatmossbread15.description"),
+                null,
+                AdvancementType.TASK,
+                true,
+                true,
+                true
+            )
+            .addCriterion(
+                "eatmoss",
+                Core.eatMossBreadCriterion.createCriterion(
+                    EatMossBreadCondition(
+                        Optional.empty(),
+                        15
+                    )
+                )
+            )
+            .save(
+                consumer,
+                "kriscraft:eat_moss_bread15"
+            )
+        val eatMossBread300 = Advancement.Builder.advancement()
+            .parent(eatMossBread15)
+            .display(
+                Core.mossBedBlock.asItem(),
+                Component.translatable("kriscraft.advancement.eatmossbread300.title"),
+                Component.translatable("kriscraft.advancement.eatmossbread300.description"),
+                null,
+                AdvancementType.GOAL,
+                true,
+                true,
+                true
+            )
+            .addCriterion(
+                "eatmoss",
+                Core.eatMossBreadCriterion.createCriterion(
+                    EatMossBreadCondition(
+                        Optional.empty(),
+                        300
+                    )
+                )
+            )
+            .save(
+                consumer,
+                "kriscraft:eat_moss_bread300"
+            )
+        val eatMossBread30000 = Advancement.Builder.advancement()
+            .parent(eatMossBread300)
+            .display(
+                Core.mossBedBlock.asItem(),
+                Component.translatable("kriscraft.advancement.eatmossbread30000.title"),
+                Component.translatable("kriscraft.advancement.eatmossbread30000.description"),
+                null,
+                AdvancementType.CHALLENGE,
+                true,
+                true,
+                true
+            )
+            .addCriterion(
+                "eatmoss",
+                Core.eatMossBreadCriterion.createCriterion(
+                    EatMossBreadCondition(
+                        Optional.empty(),
+                        30000
+                    )
+                )
+            )
+            .save(
+                consumer,
+                "kriscraft:eat_moss_bread30000"
+            )
     }
+
 }

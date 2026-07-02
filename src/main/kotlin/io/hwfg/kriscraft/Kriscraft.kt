@@ -1,8 +1,11 @@
 package io.hwfg.kriscraft
 
+import io.hwfg.kriscraft.Core.addAndGet
+import io.hwfg.kriscraft.Core.isHanding
 import io.hwfg.kriscraft.mossbed.MossBedBlockEntity
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents
+import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.network.chat.Component
@@ -12,12 +15,46 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.phys.BlockHitResult
 
 class Kriscraft : ModInitializer {
-    fun eatMoss(player: Player,level : Level,hand : InteractionHand) : InteractionResult{
+    fun eatMoss(
+        player: Player,
+        level : Level,
+        hand : InteractionHand
+    ) : InteractionResult{
         if (player.getItemInHand(hand).item == Items.MOSS_BLOCK){
             player.heal(20.0F)
             if (!player.isInvulnerable) player.getItemInHand(hand).shrink(1)
+            player.displayClientMessage(
+                Component.translatable("kriscraft.eatmoss"),
+                true
+            )
+            if (!level.isClientSide){
+                val serverPlayer = player as ServerPlayer
+                val mossCount = serverPlayer.getAttached(Core.mossCount) ?: 0
+                val newCount = mossCount + 1
+                Core.eatMossCriterion.trigger(serverPlayer,newCount)
+                serverPlayer.setAttached(Core.mossCount,newCount)
+            }
+            return InteractionResult.SUCCESS
+        }
+        return InteractionResult.PASS
+    }
+    fun eatBlockMoss(
+        player: Player,
+        level : Level,
+        hand : InteractionHand,
+        result: BlockHitResult
+    ): InteractionResult {
+        if (level.getBlockState(result.blockPos).block.asItem() == Items.MOSS_BLOCK){
+            player.heal(20.0F)
+            if (!player.isInvulnerable) level.setBlock(
+                result.blockPos,
+                Blocks.AIR.defaultBlockState(),
+                0
+            )
             player.displayClientMessage(
                 Component.translatable("kriscraft.eatmoss"),
                 true
@@ -37,10 +74,14 @@ class Kriscraft : ModInitializer {
         Core.logger.info("Loading KrisCraft...")
         Core.init()
         val latestDeltarune = 5
-        Core.logger.info("Waiting for the Deltarune Chapter ${latestDeltarune + 1}")
-        UseItemCallback.EVENT.register(::eatMoss)
+        UseItemCallback.EVENT.register { player, level, hand ->
+            eatMoss(player, level, hand)
+        }
         UseEntityCallback.EVENT.register { player, level, hand, _, _ ->
             eatMoss(player, level, hand)
+        }
+        UseBlockCallback.EVENT.register { player, level, interactionHand, result ->
+            eatBlockMoss(player, level,interactionHand,result)
         }
         EntitySleepEvents.START_SLEEPING.register { entity, pos ->
             if (entity is ServerPlayer){
@@ -52,6 +93,6 @@ class Kriscraft : ModInitializer {
                 }
             }
         }
-        Core.logger.info("Done!")
+        Core.logger.info("Waiting for the Deltarune Chapter ${latestDeltarune + 1}")
     }
 }

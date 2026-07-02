@@ -1,17 +1,19 @@
 package io.hwfg.kriscraft.item
 
 import io.hwfg.kriscraft.Core
-import io.hwfg.kriscraft.mobeffect.MossyEffect
+import io.hwfg.kriscraft.Core.addAndGet
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.effect.MobEffectInstance
-import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.component.Consumable
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.component.Consumables
 import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect
+import net.minecraft.world.level.Level
 
 class MossBread : Item(
     Properties()
@@ -46,4 +48,20 @@ class MossBread : Item(
                     )
                 )
         )
-)
+){
+    override fun finishUsingItem(
+        p0: ItemStack,
+        p1: Level,
+        p2: LivingEntity
+    ): ItemStack {
+        if (p2 !is ServerPlayer)return super.finishUsingItem(p0, p1, p2)
+        Core.eatMossBreadCriterion.trigger(
+            p2,
+            p2.addAndGet(
+                Core.eatMossBreadCount,
+                1
+            )
+        )
+        return super.finishUsingItem(p0, p1, p2)
+    }
+}

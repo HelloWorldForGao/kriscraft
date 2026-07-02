@@ -1,6 +1,7 @@
 package io.hwfg.kriscraft
 
 import com.mojang.serialization.Codec
+import io.hwfg.kriscraft.eatmossbread.EatMossBreadCriterion
 import io.hwfg.kriscraft.eatmoss.EatMossCriterion
 import io.hwfg.kriscraft.item.MossBread
 import io.hwfg.kriscraft.item.MossBurger
@@ -9,6 +10,7 @@ import io.hwfg.kriscraft.mobeffect.MossyEffect
 import io.hwfg.kriscraft.mossbed.MossBedBlock
 import io.hwfg.kriscraft.sleepmoss.SleepMossCriterion
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry
+import net.fabricmc.fabric.api.attachment.v1.AttachmentType
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder
 import net.minecraft.advancements.CriteriaTriggers
@@ -18,7 +20,10 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
+import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.InteractionHand
 import net.minecraft.world.effect.MobEffect
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.*
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -53,6 +58,10 @@ object Core {
         Identifier.fromNamespaceAndPath("kriscraft","sleep_moss_count"),
         Codec.INT
     )
+    val eatMossBreadCount = AttachmentRegistry.createPersistent(
+        Identifier.fromNamespaceAndPath("kriscraft","eat_moss_bread"),
+        Codec.INT
+    )
     val eatMossCriterion = CriteriaTriggers.register(
         Identifier.fromNamespaceAndPath("kriscraft","eat_moss").toString(),
         EatMossCriterion()
@@ -60,6 +69,10 @@ object Core {
     val sleepMossCriterion = CriteriaTriggers.register(
         Identifier.fromNamespaceAndPath("kriscraft","sleep_moss").toString(),
         SleepMossCriterion()
+    )
+    val eatMossBreadCriterion = CriteriaTriggers.register(
+        "kriscraft:eat_bread",
+        EatMossBreadCriterion()
     )
     val mossyEffect : Holder<MobEffect> = Registry.registerForHolder(
         BuiltInRegistries.MOB_EFFECT,
@@ -72,7 +85,7 @@ object Core {
         ),
         MossyEffect()
     )
-    val burgurEffect : Holder<MobEffect> = Registry.registerForHolder(
+    val burgerEffect : Holder<MobEffect> = Registry.registerForHolder(
         BuiltInRegistries.MOB_EFFECT,
         ResourceKey.create(
             Registries.MOB_EFFECT,
@@ -117,6 +130,19 @@ object Core {
         val id = Identifier.fromNamespaceAndPath(NAMESPACE,name)
         return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,id, FabricBlockEntityTypeBuilder.create(factory,block).build())
     }
+    fun ServerPlayer.getAndAdd(type : AttachmentType<Int>, num : Int) : Int{
+        val oldValue = this.getAttached(type) ?: 0
+        val newValue = oldValue + num
+        this.setAttached(type,newValue)
+        return oldValue
+    }
+    fun ServerPlayer.addAndGet(type : AttachmentType<Int>, num : Int) : Int{
+        val oldValue = this.getAttached(type) ?: 0
+        val newValue = oldValue + num
+        this.setAttached(type,newValue)
+        return newValue
+    }
+    fun Player.isHanding(hand : InteractionHand,item : Item) : Boolean = this.getItemInHand(hand).item == item
     fun init(){
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register { p0 ->
             p0.addAfter(Items.GREEN_BED,mossBedBlock.asItem())
