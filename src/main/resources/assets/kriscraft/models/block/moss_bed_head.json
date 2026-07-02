@@ -3,6 +3,7 @@
   "textures": {
     "east": "kriscraft:block/moss_bed_head_east",
     "up": "kriscraft:block/moss_bed_head_up",
-    "west": "kriscraft:block/moss_bed_head_west"
+    "west": "kriscraft:block/moss_bed_head_west",
+    "north" : "kriscraft:block/moss_bed_foot_south"
   }
 }

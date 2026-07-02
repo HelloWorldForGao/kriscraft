@@ -7,5 +7,6 @@ class Datagen : DataGeneratorEntrypoint {
     override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
         val pack = fabricDataGenerator.createPack()
         pack.addProvider(::Advancement)
+        pack.addProvider(::Recipe)
     }
 }

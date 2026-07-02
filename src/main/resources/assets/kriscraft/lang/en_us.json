@@ -9,5 +9,18 @@
   "kriscraft.advancement.kris300.title" : "MOSS MOST",
   "kriscraft.advancement.kris300.description" : "Eat 300 moss",
   "kriscraft.advancement.kris30000.title" : "Kris-self",
-  "kriscraft.advancement.kris30000.description" : "I will be a Minecraft player forever if I can eat 30000 moss every day."
+  "kriscraft.advancement.kris30000.description" : "I will be a Minecraft player forever if I can eat 30000 moss every day.",
+  "kriscraft.advancement.sleepmoss.title" : "Sleep with moss",
+  "kriscraft.advancement.sleepmoss.description" : "You may only haven't found a sheep yet",
+  "kriscraft.advancement.sleepmoss5.title" : "Monday to Friday",
+  "kriscraft.advancement.sleepmoss5.description" : "You may not lucky enough to find a sheep",
+  "kriscraft.advancement.sleepmoss31.title" : "Lullaby of the New Moon: Somnias a Moss",
+  "kriscraft.advancement.sleepmoss31.description" : "One month passed,this seed may not good",
+  "kriscraft.advancement.sleepmoss365.title" : "One year passed",
+  "kriscraft.advancement.sleepmoss365.description" : "You can delete this world",
+  "item.kriscraft.moss_bread" : "Moss bread",
+  "effect.kriscraft.burger_effect" : "Burger",
+  "effect.kriscraft.mossy_effect" : "Moss",
+  "item.kriscraft.moss_burger" : "Moss burger",
+  "kriscraft.zhizhanzhishang" : "The Leidewang will land the Earth after 3 hours"
 }

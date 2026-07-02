@@ -2,16 +2,23 @@ package io.hwfg.kriscraft
 
 import com.mojang.serialization.Codec
 import io.hwfg.kriscraft.eatmoss.EatMossCriterion
+import io.hwfg.kriscraft.item.MossBread
+import io.hwfg.kriscraft.item.MossBurger
+import io.hwfg.kriscraft.mobeffect.BurgerEffect
+import io.hwfg.kriscraft.mobeffect.MossyEffect
 import io.hwfg.kriscraft.mossbed.MossBedBlock
+import io.hwfg.kriscraft.sleepmoss.SleepMossCriterion
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder
 import net.minecraft.advancements.CriteriaTriggers
+import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.item.*
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -25,29 +32,76 @@ import org.slf4j.LoggerFactory
 
 object Core {
     const val ID = "KrisCraft"
-    val NAMESPACE = "kriscraft"
-    val LOGGER: Logger = LoggerFactory.getLogger(ID)
-    val MOSS_BED_BLOCK = registerBlock(
+    const val NAMESPACE = "kriscraft"
+    val logger: Logger = LoggerFactory.getLogger(ID)
+    val mossBedBlock = registerBlock(
         "moss_bed",
         {p0 -> MossBedBlock(DyeColor.GREEN,p0)},
         BlockBehaviour.Properties.ofFullCopy(Blocks.GREEN_BED)
             .sound(SoundType.MOSS)
     )
-    val MOSS_BED_ENTITY = registerBlockEntity(
+    val mossBedEntity = registerBlockEntity(
         "moss_bed",
         { p0,p1 -> BedBlockEntity(p0, p1) },
-        MOSS_BED_BLOCK
+        mossBedBlock
     )
-    val MOSS_COUNT = AttachmentRegistry.createPersistent(
+    val mossCount = AttachmentRegistry.createPersistent(
         Identifier.fromNamespaceAndPath("kriscraft","moss_count"),
         Codec.INT
     )
-    val EAT_MOSS_CRITERION = CriteriaTriggers.register(
+    val sleepMossCount = AttachmentRegistry.createPersistent(
+        Identifier.fromNamespaceAndPath("kriscraft","sleep_moss_count"),
+        Codec.INT
+    )
+    val eatMossCriterion = CriteriaTriggers.register(
         Identifier.fromNamespaceAndPath("kriscraft","eat_moss").toString(),
         EatMossCriterion()
     )
-    fun getBlockKey(name : String) = ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(NAMESPACE,name))
-    fun getItemKey(name : String) = ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(NAMESPACE,name))
+    val sleepMossCriterion = CriteriaTriggers.register(
+        Identifier.fromNamespaceAndPath("kriscraft","sleep_moss").toString(),
+        SleepMossCriterion()
+    )
+    val mossyEffect : Holder<MobEffect> = Registry.registerForHolder(
+        BuiltInRegistries.MOB_EFFECT,
+        ResourceKey.create(
+            Registries.MOB_EFFECT,
+            Identifier.fromNamespaceAndPath(
+                "kriscraft",
+                "mossy_effect"
+            )
+        ),
+        MossyEffect()
+    )
+    val burgurEffect : Holder<MobEffect> = Registry.registerForHolder(
+        BuiltInRegistries.MOB_EFFECT,
+        ResourceKey.create(
+            Registries.MOB_EFFECT,
+            Identifier.fromNamespaceAndPath("kriscraft","burger_effect")
+        ),
+        BurgerEffect()
+    )
+    val mossBread = Registry.register(
+        BuiltInRegistries.ITEM,
+        ResourceKey.create(
+            Registries.ITEM,
+            Identifier.fromNamespaceAndPath(
+                "kriscraft",
+                "moss_bread"
+            )
+        ),
+        MossBread()
+    )
+    val mossBurger = Registry.register(
+        BuiltInRegistries.ITEM,
+        ResourceKey.create(
+            Registries.ITEM,
+            Identifier.fromNamespaceAndPath(
+                "kriscraft",
+                "moss_burger"
+            )
+        ),
+        MossBurger()
+    )
     fun registerBlock(name: String, blockFactory: (BlockBehaviour.Properties) -> Block, properties: BlockBehaviour.Properties): Block {
         val blockId = Identifier.fromNamespaceAndPath(NAMESPACE, name)
         val blockKey = ResourceKey.create(Registries.BLOCK, blockId)
@@ -65,7 +119,10 @@ object Core {
     }
     fun init(){
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register { p0 ->
-            p0.addAfter(Items.GREEN_BED,MOSS_BED_BLOCK.asItem())
+            p0.addAfter(Items.GREEN_BED,mossBedBlock.asItem())
+        }
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register { p0 ->
+            p0.addAfter(Items.BREAD,mossBread,mossBurger)
         }
     }
 }
