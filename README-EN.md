@@ -16,13 +16,13 @@ Added a lot of ITEMS,LOGICS,RECIPES AND ADVANCEMENTS about moss
 - Now you can use moss directly (Not eating,no animation),and the placing of the moss won't be effected
 - You can also eat moss block on the ground now
 
-## Added recipes 添加内容（配方）
+## Added recipes
 
 - 3 Moss Block + 3 Any plank(shaped) => Moss Bed
 - 1 Moss Block + 8 Bread(shapeless) => 8 Moss Bread
 - 2 Moss Bread + 1 Any meat => Moss Burger
 
-## Added Advencements 添加内容（成就）
+## Added Advencements
 
 - Get advancement by using Moss Block (4 in total)
 - Get advancement by sleeping on Moss Bed (4 in total)
