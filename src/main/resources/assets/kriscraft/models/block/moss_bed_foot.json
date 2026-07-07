@@ -1,9 +1,0 @@
-{
-  "parent": "kriscraft:block/template_bed_foot",
-  "textures": {
-    "east": "kriscraft:block/moss_bed_foot_east",
-    "south": "kriscraft:block/moss_bed_foot_south",
-    "up": "kriscraft:block/moss_bed_foot_up",
-    "west": "kriscraft:block/moss_bed_foot_west"
-  }
-}
