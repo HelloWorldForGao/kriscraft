@@ -6,7 +6,7 @@
     "east": "#east",
     "west": "#west",
     "up": "#up",
-    "down": "minecraft:block/bed_down"
+    "down": "minecraft:block/oak_planks"
   },
   "elements": [
     {

@@ -1,7 +1,9 @@
 package io.hwfg.kriscraft.item
 
-import io.hwfg.kriscraft.Core
 import io.hwfg.kriscraft.Core.addAndGet
+import io.hwfg.kriscraft.eatMossBreadCount
+import io.hwfg.kriscraft.eatMossBreadCriterion
+import io.hwfg.kriscraft.mossyEffect
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
@@ -29,7 +31,7 @@ class MossBread : Item(
                 .onConsume(
                     ApplyStatusEffectsConsumeEffect(
                         MobEffectInstance(
-                            Core.mossyEffect,
+                            mossyEffect,
                             120,
                             1
                         ),
@@ -55,12 +57,9 @@ class MossBread : Item(
         p2: LivingEntity
     ): ItemStack {
         if (p2 !is ServerPlayer)return super.finishUsingItem(p0, p1, p2)
-        Core.eatMossBreadCriterion.trigger(
+        eatMossBreadCriterion.trigger(
             p2,
-            p2.addAndGet(
-                Core.eatMossBreadCount,
-                1
-            )
+            eatMossBreadCount
         )
         return super.finishUsingItem(p0, p1, p2)
     }

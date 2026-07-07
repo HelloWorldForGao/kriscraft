@@ -24,16 +24,16 @@ class Kriscraft : ModInitializer {
     ) : InteractionResult{
         if (player.getItemInHand(hand).item == Items.MOSS_BLOCK){
             player.heal(20.0F)
-            if (!player.isInvulnerable) player.getItemInHand(hand).shrink(1)
+            if (!player.isCreative) player.getItemInHand(hand).shrink(1)
             if (!level.isClientSide){
                 player.sendOverlayMessage(
                     Component.translatable("kriscraft.eatmoss")
                 )
                 val serverPlayer = player as ServerPlayer
-                val mossCount = serverPlayer.getAttached(Core.mossCount) ?: 0
+                val mossCount = serverPlayer.getAttached(mossCount) ?: 0
                 val newCount = mossCount + 1
-                Core.eatMossCriterion.trigger(serverPlayer,newCount)
-                serverPlayer.setAttached(Core.mossCount,newCount)
+                eatMossCriterion.trigger(serverPlayer,newCount)
+                serverPlayer.setAttached(io.hwfg.kriscraft.mossCount,newCount)
             }
             return InteractionResult.SUCCESS
         }
@@ -46,7 +46,7 @@ class Kriscraft : ModInitializer {
     ): InteractionResult {
         if (level.getBlockState(result.blockPos).block.asItem() == Items.MOSS_BLOCK){
             player.heal(20.0F)
-            if (!player.isInvulnerable) level.setBlock(
+            if (!player.isCreative) level.setBlock(
                 result.blockPos,
                 Blocks.AIR.defaultBlockState(),
                 0
@@ -56,10 +56,10 @@ class Kriscraft : ModInitializer {
                     Component.translatable("kriscraft.eatmoss")
                 )
                 val serverPlayer = player as ServerPlayer
-                val mossCount = serverPlayer.getAttached(Core.mossCount) ?: 0
+                val mossCount = serverPlayer.getAttached(mossCount) ?: 0
                 val newCount = mossCount + 1
-                Core.eatMossCriterion.trigger(serverPlayer,newCount)
-                serverPlayer.setAttached(Core.mossCount,newCount)
+                eatMossCriterion.trigger(serverPlayer,newCount)
+                serverPlayer.setAttached(io.hwfg.kriscraft.mossCount,newCount)
             }
             return InteractionResult.SUCCESS
         }
@@ -75,19 +75,27 @@ class Kriscraft : ModInitializer {
         UseEntityCallback.EVENT.register { player, level, hand, _, _ ->
             eatMoss(player, level, hand)
         }
-        UseBlockCallback.EVENT.register { player, level, interactionHand, result ->
+        UseBlockCallback.EVENT.register { player, level, _, result ->
             eatBlockMoss(player, level, result)
         }
         EntitySleepEvents.START_SLEEPING.register { entity, pos ->
             if (entity is ServerPlayer){
                 if (entity.level().getBlockEntity(pos) is MossBedBlockEntity){
-                    val oldValue = entity.getAttached(Core.sleepMossCount) ?: 0
+                    val oldValue = entity.getAttached(sleepMossCount) ?: 0
                     val newValue = oldValue + 1
-                    Core.sleepMossCriterion.trigger(entity,newValue)
-                    entity.setAttached(Core.sleepMossCount,newValue)
+                    sleepMossCriterion.trigger(entity,newValue)
+                    entity.setAttached(sleepMossCount,newValue)
                 }
             }
         }
+        init()
         Core.logger.info("Waiting for the Deltarune Chapter ${latestDeltarune + 1}")
+    }
+    fun init(){
+        attachmentInit()
+        blockInit()
+        criterionInit()
+        effectInit()
+        itemInit()
     }
 }

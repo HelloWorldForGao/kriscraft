@@ -1,6 +1,8 @@
 package io.hwfg.kriscraft.datagen
 
-import io.hwfg.kriscraft.Core
+import io.hwfg.kriscraft.mossBedBlock
+import io.hwfg.kriscraft.mossBread
+import io.hwfg.kriscraft.mossBurger
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.core.HolderLookup
@@ -20,7 +22,7 @@ class Recipe(
         exporter: RecipeOutput
     ): RecipeProvider = object : RecipeProvider(registryLookup,exporter) {
         override fun buildRecipes() {
-            this.shaped(RecipeCategory.TOOLS, Core.mossBedBlock.asItem(),1)
+            this.shaped(RecipeCategory.TOOLS, mossBedBlock.asItem(),1)
                 .pattern("   ")
                 .pattern("AAA")
                 .pattern("BBB")
@@ -29,17 +31,17 @@ class Recipe(
                 .group("moss_bed")
                 .unlockedBy(getHasName(Items.MOSS_BLOCK),has(Items.MOSS_BLOCK))
                 .save(exporter)
-            this.shapeless(RecipeCategory.FOOD, Core.mossBread,8)
+            this.shapeless(RecipeCategory.FOOD, mossBread,8)
                 .requires(Items.BREAD,8)
                 .requires(Items.MOSS_BLOCK)
                 .group("moss_bread")
                 .unlockedBy(getHasName(Items.MOSS_BLOCK),has(Items.MOSS_BLOCK))
                 .save(exporter)
-            this.shapeless(RecipeCategory.FOOD, Core.mossBurger,1)
-                .requires(Core.mossBread,2)
+            this.shapeless(RecipeCategory.FOOD, mossBurger,1)
+                .requires(mossBread,2)
                 .requires(ItemTags.MEAT)
                 .group("moss_burger")
-                .unlockedBy(getHasName(Core.mossBread),has(Core.mossBread))
+                .unlockedBy(getHasName(mossBread),has(mossBread))
                 .save(exporter)
         }
     }
