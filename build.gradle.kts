@@ -84,6 +84,7 @@ tasks.jar {
     from("LICENSE") {
         rename { "${it}_${project.base.archivesName.get()}" }
     }
+    archiveClassifier.set(project.property("minecraft_version").toString())
 }
 
 // configure the maven publication
