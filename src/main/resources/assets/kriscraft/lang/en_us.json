@@ -11,7 +11,7 @@
   "kriscraft.advancement.kris30000.title" : "Kris-self",
   "kriscraft.advancement.kris30000.description" : "I will be a Minecraft player forever if I can eat 30000 moss every day.",
   "kriscraft.advancement.sleepmoss1.title" : "Sleep with moss",
-  "kriscraft.advancement.sleepmoss1.description" : "You may only haven't found a sheep yet",
+  "kriscraft.advancement.sleepmoss1.description" : "Sleep for one moss-night first,then do anything else tomorrow",
   "kriscraft.advancement.sleepmoss5.title" : "Monday to Friday",
   "kriscraft.advancement.sleepmoss5.description" : "You may not lucky enough to find a sheep",
   "kriscraft.advancement.sleepmoss31.title" : "Lullaby of the New Moon: Somnias a Moss",
@@ -30,5 +30,10 @@
   "effect.kriscraft.burger_effect" : "Burger",
   "effect.kriscraft.mossy_effect" : "Moss",
   "item.kriscraft.moss_burger" : "Moss burger",
-  "kriscraft.zhizhanzhishang1" : "The Leidewang will land the Earth after 3 hours"
+  "kriscraft.the_sacrifice_of_stoping_wars1" : "The Leidewang will land the Earth after 3 hours",
+  "kriscraft.the_sacrifice_of_stoping_wars2": "The burger is not big and the bread is dry",
+  "kriscraft.the_sacrifice_of_stoping_wars3": "The only thing which make me remember is the burger in school",
+  "kriscraft.the_sacrifice_of_stoping_wars4": "seems no matter how high-level you are,you can't keep yourself from the burger",
+  "kriscraft.the_sacrifice_of_stoping_wars5": "But the space is big,and who can determine the burger in school?",
+  "kriscraft.the_sacrifice_of_stoping_wars" : "Eat %s moss burgers"
 }

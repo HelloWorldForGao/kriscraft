@@ -1,5 +1,7 @@
 package io.hwfg.kriscraft.datagen
 
+import io.hwfg.kriscraft.datagen.advancements.EatBurger
+import io.hwfg.kriscraft.datagen.advancements.EatMossBread
 import io.hwfg.kriscraft.datagen.advancements.MainLine
 import io.hwfg.kriscraft.datagen.advancements.SleepMoss
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
@@ -16,7 +18,9 @@ class Datagen : DataGeneratorEntrypoint {
                 p1,
                 listOf(
                     MainLine(),
-                    SleepMoss()
+                    SleepMoss(),
+                    EatBurger(),
+                    EatMossBread()
                 )
             )
         }

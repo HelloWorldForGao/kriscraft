@@ -11,7 +11,7 @@
   "kriscraft.advancement.kris30000.title": "Kris本尊",
   "kriscraft.advancement.kris30000.description": "日啖苔藓三万块，不辞长做MC人",
   "kriscraft.advancement.sleepmoss1.title": "与藓同眠",
-  "kriscraft.advancement.sleepmoss1.description": "你可能只是没有找到羊",
+  "kriscraft.advancement.sleepmoss1.description": "藓睡一觉，别的明天再说",
   "kriscraft.advancement.sleepmoss5.title": "周一到周五",
   "kriscraft.advancement.sleepmoss5.description": "可能是你运气不好还没找到羊",
   "kriscraft.advancement.sleepmoss31.title": "新月的摇篮曲：伴藓同眠",
@@ -30,5 +30,10 @@
   "effect.kriscraft.burger_effect": "汉堡",
   "effect.kriscraft.mossy_effect": "苔藓",
   "item.kriscraft.moss_burger": "苔藓汉堡",
-  "kriscraft.zhizhanzhishang1": "雷德王还有三个小时降临地球"
+  "kriscraft.the_sacrifice_of_stoping_wars1": "雷德王还有3个小时降临地球",
+  "kriscraft.the_sacrifice_of_stoping_wars2": "汉堡不大，面包很干",
+  "kriscraft.the_sacrifice_of_stoping_wars3": "唯独让我牵挂难以放下执念的，便是学校的汉堡了",
+  "kriscraft.the_sacrifice_of_stoping_wars4": "看来无论何等高级的生命都无法抵御汉堡的诱惑",
+  "kriscraft.the_sacrifice_of_stoping_wars5": "可宇宙苍茫，谁又能主宰学校的汉堡呢?",
+  "kriscraft.the_sacrifice_of_stoping_wars" : "吃 %s 个苔藓汉堡"
 }

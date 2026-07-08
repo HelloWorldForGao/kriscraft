@@ -57,23 +57,15 @@ object Core {
         return newValue
     }
     fun Player.isHanding(hand : InteractionHand,item : Item) : Boolean = this.getItemInHand(hand).item == item
-    fun init(){
-//        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register { p0 ->
-//            p0.addAfter(Items.GREEN_BED,mossBedBlock.asItem())
-//        }
-//        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register { p0 ->
-//            p0.addAfter(Items.BREAD,mossBread,mossBurger)
-//        }
-
-    }
+    fun init() = Unit
     class CountableCriterion : SimpleCriterionTrigger<CountableCondition>() {
         override fun codec(): Codec<CountableCondition> = CountableCondition.codec
         fun trigger(player: ServerPlayer,time : Int) = super.trigger(player){p0 ->
             time >= p0.time
         }
-        fun trigger(player: ServerPlayer,attachment : AttachmentType<Int>) = trigger(
+        fun trigger(player: ServerPlayer,attachment : AttachmentType<Int>,num : Int = 1) = trigger(
             player,
-            player.addAndGet(attachment,1)
+            player.addAndGet(attachment,num)
         )
     }
 

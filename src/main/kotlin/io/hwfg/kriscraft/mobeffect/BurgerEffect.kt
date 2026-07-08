@@ -17,7 +17,7 @@ class BurgerEffect : MobEffect(MobEffectCategory.BENEFICIAL,0x00FF00) {
     ): Boolean {
         if (livingEntity is ServerPlayer){
             livingEntity.sendOverlayMessage(
-                Component.translatable("kriscraft.zhizhanzhishang1")
+                Component.translatable("kriscraft.the_sacrifice_of_stoping_wars1")
                     .withStyle(ChatFormatting.RED)
                     .withStyle(ChatFormatting.BOLD)
             )

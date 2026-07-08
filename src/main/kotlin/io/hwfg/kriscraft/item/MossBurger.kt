@@ -1,6 +1,8 @@
 package io.hwfg.kriscraft.item
 
 import io.hwfg.kriscraft.burgerEffect
+import io.hwfg.kriscraft.eatMossBreadCount
+import io.hwfg.kriscraft.eatMossBreadCriterion
 import io.hwfg.kriscraft.eatMossBurgerCount
 import io.hwfg.kriscraft.eatMossBurgerCriterion
 import net.minecraft.core.registries.Registries
@@ -56,6 +58,11 @@ class MossBurger : Item(
         eatMossBurgerCriterion.trigger(
             entity,
             eatMossBurgerCount
+        )
+        eatMossBreadCriterion.trigger(
+            entity,
+            eatMossBreadCount,
+            2
         )
         return res
     }
