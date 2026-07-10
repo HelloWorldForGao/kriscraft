@@ -1,11 +1,16 @@
 package io.hwfg.kriscraft
 
+import com.google.gson.Gson
+import io.hwfg.kriscraft.config.configureInit
 import io.hwfg.kriscraft.mossbed.MossBedBlockEntity
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.fabricmc.fabric.api.event.player.UseItemCallback
+import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
@@ -15,8 +20,18 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.phys.BlockHitResult
+import java.nio.file.Files
+import java.nio.file.Path
+import kotlin.io.path.notExists
 
 class Kriscraft : ModInitializer {
+    companion object{
+        lateinit var configRoot : Path
+        lateinit var configFile : Path
+        val gson : Gson = Gson().newBuilder()
+            .setPrettyPrinting()
+            .create()
+    }
     fun eatMoss(
         player: Player,
         level : Level,
@@ -89,6 +104,11 @@ class Kriscraft : ModInitializer {
             }
         }
         init()
+        configRoot = FabricLoader.getInstance().configDir
+        configFile = configRoot.resolve("kriscraft.json")
+        if (configRoot.notExists()) Files.createDirectories(configRoot)
+        if (configFile.notExists()) Files.createFile(configFile)
+        configureInit()
         Core.logger.info("Waiting for the Deltarune Chapter ${latestDeltarune + 1}")
     }
     fun init(){

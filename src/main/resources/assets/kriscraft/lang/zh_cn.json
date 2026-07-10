@@ -35,5 +35,17 @@
   "kriscraft.the_sacrifice_of_stoping_wars3": "唯独让我牵挂难以放下执念的，便是学校的汉堡了",
   "kriscraft.the_sacrifice_of_stoping_wars4": "看来无论何等高级的生命都无法抵御汉堡的诱惑",
   "kriscraft.the_sacrifice_of_stoping_wars5": "可宇宙苍茫，谁又能主宰学校的汉堡呢?",
-  "kriscraft.the_sacrifice_of_stoping_wars" : "吃 %s 个苔藓汉堡"
+  "kriscraft.the_sacrifice_of_stoping_wars" : "吃 %s 个苔藓汉堡",
+  "kriscraft.true" : "是",
+  "kriscraft.false" : "否",
+  "kriscraft.ui" : "Kriscraft配置页面",
+  "kriscraft.name" : "Kris工艺",
+  "kriscraft.description" : "让苔藓变得更有用",
+  "kriscraft.ui.tip" : "使用方向键移动你的灵魂或修改数值",
+  "modmenu.badge.moss" : "苔藓",
+  "modmenu.badge.deltarune" : "三角符文",
+  "modmenu.general_idea" : "源灵感",
+  "modmenu.genshin" : "源神",
+  "modmenu.nameTranslation.kriscraft": "Kris工艺",
+  "modmenu.descriptionTranslation.kriscraft": "让苔藓变得更有用"
 }

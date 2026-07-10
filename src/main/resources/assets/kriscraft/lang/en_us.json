@@ -35,5 +35,17 @@
   "kriscraft.the_sacrifice_of_stoping_wars3": "The only thing which make me remember is the burger in school",
   "kriscraft.the_sacrifice_of_stoping_wars4": "seems no matter how high-level you are,you can't keep yourself from the burger",
   "kriscraft.the_sacrifice_of_stoping_wars5": "But the space is big,and who can determine the burger in school?",
-  "kriscraft.the_sacrifice_of_stoping_wars" : "Eat %s moss burgers"
+  "kriscraft.the_sacrifice_of_stoping_wars" : "Eat %s moss burgers",
+  "kriscraft.true" : "Yes",
+  "kriscraft.false" : "No",
+  "kriscraft.ui" : "Kriscraft configure page",
+  "kriscraft.name" : "Kris craft",
+  "kriscraft.description" : "Make the moss more useful",
+  "kriscraft.ui.tip" : "Move your soul or change number by using your Arrow Key",
+  "modmenu.badge.moss" : "Moss",
+  "modmenu.badge.deltarune" : "Deltarune",
+  "modmenu.general_idea" : "General Idea",
+  "modmenu.genshin" : "Genshin",
+  "modmenu.nameTranslation.kriscraft": "Kris craft",
+  "modmenu.descriptionTranslation.kriscraft": "Make the moss more useful"
 }

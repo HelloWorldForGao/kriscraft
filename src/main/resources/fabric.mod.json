@@ -18,12 +18,28 @@
     ],
     "fabric-datagen": [
       "io.hwfg.kriscraft.datagen.Datagen"
+    ],
+    "modmenu" : [
+      "io.hwfg.kriscraft.config.ModMenu"
     ]
   },
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-language-kotlin": ">=${kotlin_loader_version}",
     "fabric-api": "*",
-    "minecraft": "${minecraft_version}"
+    "minecraft": "${minecraft_version}",
+    "modmenu" : ">=${modmenu_version}"
+  },
+  "custom" : {
+    "modmenu" : {
+      "badges" : [
+        "moss",
+        "deltarune"
+      ],
+      "links" : {
+        "modmenu.general_idea" : "https://store.steampowered.com/app/1671210/DELTARUNE/",
+        "modmenu.genshin" : "https://genshin.hoyoverse.com/"
+      }
+    }
   }
 }

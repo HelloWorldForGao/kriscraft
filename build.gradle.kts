@@ -14,7 +14,7 @@ base {
     archivesName.set(project.property("archives_base_name") as String)
 }
 
-val targetJavaVersion = 21
+val targetJavaVersion = 25
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
     // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
@@ -31,6 +31,8 @@ repositories {
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
+    maven("https://maven.terraformersmc.com/") // ModMenu
+    maven("https://maven.shedaniel.me/")       // Cloth Config
     mavenCentral()
 }
 
@@ -43,6 +45,8 @@ dependencies {
 
     implementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
     compileOnly(kotlin("stdlib-jdk8"))
+    implementation("com.terraformersmc:modmenu:${project.property("modmenu_version")}")
+    //implementation("me.shedaniel.cloth:cloth-config-fabric:18.0.14")
 }
 
 fabricApi {
@@ -62,7 +66,8 @@ tasks.processResources {
             "version" to (project.version ?: "???"),
             "minecraft_version" to (project.property("minecraft_version") ?: "???"),
             "loader_version" to (project.property("loader_version") ?: "???"),
-            "kotlin_loader_version" to (project.property("kotlin_loader_version") ?: "???")
+            "kotlin_loader_version" to (project.property("kotlin_loader_version") ?: "???"),
+            "modmenu_version" to (project.property("modmenu_version") ?: "???")
         )
     }
 }
