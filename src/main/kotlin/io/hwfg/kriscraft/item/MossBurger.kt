@@ -1,10 +1,10 @@
 package io.hwfg.kriscraft.item
 
-import io.hwfg.kriscraft.burgerEffect
-import io.hwfg.kriscraft.eatMossBreadCount
-import io.hwfg.kriscraft.eatMossBreadCriterion
-import io.hwfg.kriscraft.eatMossBurgerCount
-import io.hwfg.kriscraft.eatMossBurgerCriterion
+import io.hwfg.kriscraft.mod.burgerEffect
+import io.hwfg.kriscraft.mod.eatMossBreadCount
+import io.hwfg.kriscraft.mod.eatMossBreadCriterion
+import io.hwfg.kriscraft.mod.eatMossBurgerCount
+import io.hwfg.kriscraft.mod.eatMossBurgerCriterion
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey

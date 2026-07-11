@@ -2,7 +2,6 @@ package io.hwfg.kriscraft.config
 
 import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
-import com.mojang.blaze3d.platform.InputConstants
 import io.hwfg.kriscraft.Core
 import io.hwfg.kriscraft.Kriscraft
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper
@@ -66,8 +65,11 @@ fun configureInit(){
         Kriscraft.configFile
     )
     Core.logger.info("Read ${str.length} bytes : $str")
-    val temp = Kriscraft.gson.fromJson<MutableMap<String, JsonElement>>(str, object : TypeToken<MutableMap<String, JsonElement>>(){}.type)
-    for ((p0,p1) in temp) screen.core[p0] = p1
+    val temp = Kriscraft.gson.fromJson<MutableMap<String, JsonElement>>(
+        str,
+        object : TypeToken<MutableMap<String, JsonElement>>() {}.type
+    ) ?: return
+    for ((p0,p1) in temp) screen.configures[p0] = p1
 }
 fun JsonElement.toComponent() : Component{
     return if (this.isJsonPrimitive){
@@ -96,4 +98,6 @@ fun JsonElement.change(isLeft : Boolean) : JsonElement{
     }
     return this
 }
+inline fun <reified T>JsonElement.fromJsonElement() : T = Kriscraft.gson
+    .fromJson(this,object : TypeToken<T>(){}.type)
 fun toJsonElement(obj : Any) : JsonElement = Kriscraft.gson.toJsonTree(obj)

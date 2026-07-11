@@ -1,8 +1,8 @@
 package io.hwfg.kriscraft.datagen.advancements
 
 import io.hwfg.kriscraft.Core
-import io.hwfg.kriscraft.eatMossBurgerCriterion
-import io.hwfg.kriscraft.mossBurger
+import io.hwfg.kriscraft.mod.eatMossBurgerCriterion
+import io.hwfg.kriscraft.mod.mossBurger
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType

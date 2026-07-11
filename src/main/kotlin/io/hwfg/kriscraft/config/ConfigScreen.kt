@@ -1,7 +1,6 @@
 package io.hwfg.kriscraft.config
 
 import com.google.gson.JsonElement
-import com.google.gson.reflect.TypeToken
 import io.hwfg.kriscraft.Core
 import io.hwfg.kriscraft.Kriscraft
 import net.minecraft.ChatFormatting
@@ -10,37 +9,33 @@ import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.input.KeyEvent
 import net.minecraft.client.renderer.RenderPipelines
-import net.minecraft.client.resources.sounds.MinecartSoundInstance
 import net.minecraft.client.resources.sounds.SimpleSoundInstance
-import net.minecraft.client.resources.sounds.Sound
-import net.minecraft.client.resources.sounds.SoundInstance
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import org.lwjgl.glfw.GLFW
 import java.nio.file.Files
 
 class ConfigScreen : Screen(Component.translatable("kriscraft.ui")) {
-    var core : MutableMap<String, JsonElement> = mutableMapOf()
+    var configures : MutableMap<String, JsonElement> = mutableMapOf()
     private var ptrMap : MutableMap<Int,String> = mutableMapOf()
     private var ptr : Int = 0
+    private var isMoved = false
     private inline fun <reified T>addConfig(name : String, default : T){
-        core[name] = Kriscraft.gson.toJsonTree(default)
-        ptrMap[core.size - 1] = name
+        configures[name] = Kriscraft.gson.toJsonTree(default)
+        ptrMap[configures.size - 1] = name
     }
     fun indexToString(num : Int) : String? = ptrMap[num]
     fun stringToIndex(str : String) : Int{
         var cnt = 0
-        for ((i,j) in core){
+        for ((i, _) in configures){
             if (i == str) return cnt
             cnt++
         }
         return -1
     }
     fun centerY(genHeight : Int,objectHeight : Int) : Int = genHeight - (objectHeight / 2)
-    fun up(){
+    fun move(){
         Minecraft.getInstance().soundManager.play(
             SimpleSoundInstance.forUI(
                 SoundEvents.UI_BUTTON_CLICK.value(),
@@ -48,41 +43,27 @@ class ConfigScreen : Screen(Component.translatable("kriscraft.ui")) {
                 1F
             )
         )
-        if (ptr == 0) ptr = core.size - 1
+        isMoved = true
+    }
+    fun up(){
+        move()
+        if (ptr == 0) ptr = configures.size - 1
         else ptr--
     }
     fun down(){
-        Minecraft.getInstance().soundManager.play(
-            SimpleSoundInstance.forUI(
-                SoundEvents.UI_BUTTON_CLICK.value(),
-                1F,
-                1F
-            )
-        )
-        if (ptr == core.size - 1) ptr = 0
+        move()
+        if (ptr == configures.size - 1) ptr = 0
         else ptr++
     }
     fun left(){
-        Minecraft.getInstance().soundManager.play(
-            SimpleSoundInstance.forUI(
-                SoundEvents.UI_BUTTON_CLICK.value(),
-                1F,
-                1F
-            )
-        )
+        move()
         //configures[ptr].left()
-        core[indexToString(ptr) ?: ""] = core[indexToString(ptr)]?.change(true) ?: return
+        configures[indexToString(ptr) ?: ""] = configures[indexToString(ptr)]?.change(true) ?: return
     }
     fun right(){
-        Minecraft.getInstance().soundManager.play(
-            SimpleSoundInstance.forUI(
-                SoundEvents.UI_BUTTON_CLICK.value(),
-                1F,
-                1F
-            )
-        )
+        move()
         //configures[ptr].right()
-        core[indexToString(ptr) ?: ""] = core[indexToString(ptr)]?.change(false) ?: return
+        configures[indexToString(ptr) ?: ""] = configures[indexToString(ptr)]?.change(false) ?: return
     }
 
     override fun keyReleased(event: KeyEvent): Boolean {
@@ -96,7 +77,6 @@ class ConfigScreen : Screen(Component.translatable("kriscraft.ui")) {
         }
         return super.keyReleased(event)
     }
-
     override fun extractRenderState(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, a: Float) {
         super.extractRenderState(graphics, mouseX, mouseY, a)
         graphics.text(
@@ -113,25 +93,23 @@ class ConfigScreen : Screen(Component.translatable("kriscraft.ui")) {
             50,
             0xFFFFFFFF.toInt()
         )
-        for ((i, element) in core){
+        for ((i, element) in configures){
+            val y = centerY(
+                30 * (stringToIndex(i) + 1) + 90,
+                Minecraft.getInstance().font.lineHeight
+            )
             graphics.text(
                 Minecraft.getInstance().font,
                 Component.translatable("kriscraft.key.$i"),
                 100,
-                centerY(
-                    30 * (stringToIndex(i) + 1) + 90,
-                    Minecraft.getInstance().font.lineHeight
-                ),
+                y,
                 0xFFFFFFFF.toInt()
             )
             graphics.text(
                 Minecraft.getInstance().font,
                 element.toComponent(),
                 400,
-                centerY(
-                    30 * (stringToIndex(i) + 1) + 90,
-                    Minecraft.getInstance().font.lineHeight
-                ),
+                y,
                 0xFFFFFFFF.toInt()
             )
         }
@@ -155,9 +133,16 @@ class ConfigScreen : Screen(Component.translatable("kriscraft.ui")) {
             16,
             16
         )
-        graphics.text(
+        if (!isMoved) graphics.text(
             Minecraft.getInstance().font,
             Component.translatable("kriscraft.ui.tip").withStyle(ChatFormatting.GOLD),
+            100,
+            this.height - 20,
+            0xFFFFFFFF.toInt()
+        )
+        else graphics.text(
+            Minecraft.getInstance().font,
+            Component.translatable("kriscraft.ui.tip.${indexToString(ptr)}").withStyle(ChatFormatting.GOLD),
             100,
             this.height - 20,
             0xFFFFFFFF.toInt()
@@ -165,7 +150,7 @@ class ConfigScreen : Screen(Component.translatable("kriscraft.ui")) {
     }
 
     override fun onClose() {
-        val str = Kriscraft.gson.toJson(core)
+        val str = Kriscraft.gson.toJson(configures)
         Core.logger.info("Write ${str.length} char into kriscraft.json : $str")
         Files.write(
             Kriscraft.configFile,
@@ -189,7 +174,4 @@ class ConfigScreen : Screen(Component.translatable("kriscraft.ui")) {
         )
     }
 
-    override fun init() {
-        super.init()
-    }
 }

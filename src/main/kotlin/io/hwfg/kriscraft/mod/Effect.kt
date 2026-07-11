@@ -1,4 +1,4 @@
-package io.hwfg.kriscraft
+package io.hwfg.kriscraft.mod
 
 import io.hwfg.kriscraft.mobeffect.BurgerEffect
 import io.hwfg.kriscraft.mobeffect.MossyEffect
@@ -10,6 +10,7 @@ import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.effect.MobEffect
 
+@JvmField
 val mossyEffect : Holder<MobEffect> = Registry.registerForHolder(
     BuiltInRegistries.MOB_EFFECT,
     ResourceKey.create(
@@ -21,6 +22,7 @@ val mossyEffect : Holder<MobEffect> = Registry.registerForHolder(
     ),
     MossyEffect()
 )
+@JvmField
 val burgerEffect : Holder<MobEffect> = Registry.registerForHolder(
     BuiltInRegistries.MOB_EFFECT,
     ResourceKey.create(

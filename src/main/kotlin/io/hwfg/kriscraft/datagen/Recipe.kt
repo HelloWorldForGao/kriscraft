@@ -1,8 +1,8 @@
 package io.hwfg.kriscraft.datagen
 
-import io.hwfg.kriscraft.mossBedBlock
-import io.hwfg.kriscraft.mossBread
-import io.hwfg.kriscraft.mossBurger
+import io.hwfg.kriscraft.mod.mossBedBlock
+import io.hwfg.kriscraft.mod.mossBread
+import io.hwfg.kriscraft.mod.mossBurger
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.core.HolderLookup

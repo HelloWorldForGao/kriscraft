@@ -9,6 +9,9 @@
   "license": "WTFPL",
   "icon": "assets/kriscraft/Kris.png",
   "environment": "*",
+  "mixins": [
+    "kriscraft.mixins.json"
+  ],
   "entrypoints": {
     "client": [
       "io.hwfg.kriscraft.client.KriscraftClient"

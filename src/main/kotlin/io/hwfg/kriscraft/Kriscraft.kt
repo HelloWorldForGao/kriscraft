@@ -2,15 +2,22 @@ package io.hwfg.kriscraft
 
 import com.google.gson.Gson
 import io.hwfg.kriscraft.config.configureInit
+import io.hwfg.kriscraft.mod.attachmentInit
+import io.hwfg.kriscraft.mod.blockInit
+import io.hwfg.kriscraft.mod.criterionInit
+import io.hwfg.kriscraft.mod.eatMossCriterion
+import io.hwfg.kriscraft.mod.effectInit
+import io.hwfg.kriscraft.mod.itemInit
+import io.hwfg.kriscraft.mod.mossCount
+import io.hwfg.kriscraft.mod.sleepMossCount
+import io.hwfg.kriscraft.mod.sleepMossCriterion
 import io.hwfg.kriscraft.mossbed.MossBedBlockEntity
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
@@ -40,6 +47,7 @@ class Kriscraft : ModInitializer {
         if (player.getItemInHand(hand).item == Items.MOSS_BLOCK){
             player.heal(20.0F)
             if (!player.isCreative) player.getItemInHand(hand).shrink(1)
+            if (player.isShiftKeyDown) return InteractionResult.PASS
             if (!level.isClientSide){
                 player.sendOverlayMessage(
                     Component.translatable("kriscraft.eatmoss")
@@ -48,7 +56,7 @@ class Kriscraft : ModInitializer {
                 val mossCount = serverPlayer.getAttached(mossCount) ?: 0
                 val newCount = mossCount + 1
                 eatMossCriterion.trigger(serverPlayer,newCount)
-                serverPlayer.setAttached(io.hwfg.kriscraft.mossCount,newCount)
+                serverPlayer.setAttached(io.hwfg.kriscraft.mod.mossCount,newCount)
             }
             return InteractionResult.SUCCESS
         }
@@ -66,6 +74,7 @@ class Kriscraft : ModInitializer {
                 Blocks.AIR.defaultBlockState(),
                 0
             )
+            if (player.isShiftKeyDown) return InteractionResult.PASS
             if (!level.isClientSide){
                 player.sendOverlayMessage(
                     Component.translatable("kriscraft.eatmoss")
@@ -74,7 +83,7 @@ class Kriscraft : ModInitializer {
                 val mossCount = serverPlayer.getAttached(mossCount) ?: 0
                 val newCount = mossCount + 1
                 eatMossCriterion.trigger(serverPlayer,newCount)
-                serverPlayer.setAttached(io.hwfg.kriscraft.mossCount,newCount)
+                serverPlayer.setAttached(io.hwfg.kriscraft.mod.mossCount,newCount)
             }
             return InteractionResult.SUCCESS
         }

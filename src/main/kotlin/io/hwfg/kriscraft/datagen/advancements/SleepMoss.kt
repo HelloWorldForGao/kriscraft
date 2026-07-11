@@ -2,8 +2,8 @@ package io.hwfg.kriscraft.datagen.advancements
 
 import io.hwfg.kriscraft.Core
 import io.hwfg.kriscraft.datagen.advancements.MainLine.Companion.krisRoot
-import io.hwfg.kriscraft.mossBedBlock
-import io.hwfg.kriscraft.sleepMossCriterion
+import io.hwfg.kriscraft.mod.mossBedBlock
+import io.hwfg.kriscraft.mod.sleepMossCriterion
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType

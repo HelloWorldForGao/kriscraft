@@ -1,9 +1,8 @@
 package io.hwfg.kriscraft.item
 
-import io.hwfg.kriscraft.Core.addAndGet
-import io.hwfg.kriscraft.eatMossBreadCount
-import io.hwfg.kriscraft.eatMossBreadCriterion
-import io.hwfg.kriscraft.mossyEffect
+import io.hwfg.kriscraft.mod.eatMossBreadCount
+import io.hwfg.kriscraft.mod.eatMossBreadCriterion
+import io.hwfg.kriscraft.mod.mossyEffect
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey

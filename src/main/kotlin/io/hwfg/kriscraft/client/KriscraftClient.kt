@@ -1,6 +1,5 @@
 package io.hwfg.kriscraft.client
 
-import com.mojang.authlib.minecraft.client.MinecraftClient
 import io.hwfg.kriscraft.config.ConfigScreen
 import io.hwfg.kriscraft.config.open
 import io.hwfg.kriscraft.config.screen

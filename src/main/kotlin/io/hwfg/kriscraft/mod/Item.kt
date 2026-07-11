@@ -1,4 +1,4 @@
-package io.hwfg.kriscraft
+package io.hwfg.kriscraft.mod
 
 import io.hwfg.kriscraft.item.MossBread
 import io.hwfg.kriscraft.item.MossBurger
@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.CreativeModeTabs
 import net.minecraft.world.item.Items
 
+@JvmField
 val mossBread = Registry.register(
     BuiltInRegistries.ITEM,
     ResourceKey.create(
@@ -22,6 +23,7 @@ val mossBread = Registry.register(
     ),
     MossBread()
 )
+@JvmField
 val mossBurger = Registry.register(
     BuiltInRegistries.ITEM,
     ResourceKey.create(
