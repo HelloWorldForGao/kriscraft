@@ -1,24 +1,20 @@
 package io.hwfg.kriscraft
 
 import com.google.gson.Gson
+import io.hwfg.kriscraft.Core.mossHeal
+import io.hwfg.kriscraft.config.command
 import io.hwfg.kriscraft.config.configureInit
-import io.hwfg.kriscraft.mod.attachmentInit
-import io.hwfg.kriscraft.mod.blockInit
-import io.hwfg.kriscraft.mod.criterionInit
-import io.hwfg.kriscraft.mod.eatMossCriterion
-import io.hwfg.kriscraft.mod.effectInit
-import io.hwfg.kriscraft.mod.itemInit
-import io.hwfg.kriscraft.mod.mossCount
-import io.hwfg.kriscraft.mod.sleepMossCount
-import io.hwfg.kriscraft.mod.sleepMossCriterion
+import io.hwfg.kriscraft.config.configures
+import io.hwfg.kriscraft.mod.*
 import io.hwfg.kriscraft.mossbed.MossBedBlockEntity
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.network.chat.Component
+import net.minecraft.client.Minecraft
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -45,14 +41,11 @@ class Kriscraft : ModInitializer {
         hand : InteractionHand
     ) : InteractionResult{
         if (player.getItemInHand(hand).item == Items.MOSS_BLOCK){
-            player.heal(20.0F)
             if (!player.isCreative) player.getItemInHand(hand).shrink(1)
             if (player.isShiftKeyDown) return InteractionResult.PASS
             if (!level.isClientSide){
-                player.sendOverlayMessage(
-                    Component.translatable("kriscraft.eatmoss")
-                )
                 val serverPlayer = player as ServerPlayer
+                serverPlayer.mossHeal()
                 val mossCount = serverPlayer.getAttached(mossCount) ?: 0
                 val newCount = mossCount + 1
                 eatMossCriterion.trigger(serverPlayer,newCount)
@@ -68,7 +61,6 @@ class Kriscraft : ModInitializer {
         result: BlockHitResult
     ): InteractionResult {
         if (level.getBlockState(result.blockPos).block.asItem() == Items.MOSS_BLOCK){
-            player.heal(20.0F)
             if (!player.isCreative) level.setBlock(
                 result.blockPos,
                 Blocks.AIR.defaultBlockState(),
@@ -76,10 +68,8 @@ class Kriscraft : ModInitializer {
             )
             if (player.isShiftKeyDown) return InteractionResult.PASS
             if (!level.isClientSide){
-                player.sendOverlayMessage(
-                    Component.translatable("kriscraft.eatmoss")
-                )
                 val serverPlayer = player as ServerPlayer
+                serverPlayer.mossHeal()
                 val mossCount = serverPlayer.getAttached(mossCount) ?: 0
                 val newCount = mossCount + 1
                 eatMossCriterion.trigger(serverPlayer,newCount)
@@ -94,13 +84,16 @@ class Kriscraft : ModInitializer {
         Core.init()
         val latestDeltarune = 5
         UseItemCallback.EVENT.register { player, level, hand ->
-            eatMoss(player, level, hand)
+            if (configures["can_eat_moss"]?.asBoolean == true) eatMoss(player, level, hand)
+            else InteractionResult.PASS
         }
         UseEntityCallback.EVENT.register { player, level, hand, _, _ ->
-            eatMoss(player, level, hand)
+            if (configures["can_eat_moss"]?.asBoolean == true) eatMoss(player, level, hand)
+            else InteractionResult.PASS
         }
         UseBlockCallback.EVENT.register { player, level, _, result ->
-            eatBlockMoss(player, level, result)
+            if (configures["can_eat_moss_block"]?.asBoolean == true) eatBlockMoss(player, level, result)
+            else InteractionResult.PASS
         }
         EntitySleepEvents.START_SLEEPING.register { entity, pos ->
             if (entity is ServerPlayer){
@@ -111,6 +104,9 @@ class Kriscraft : ModInitializer {
                     entity.setAttached(sleepMossCount,newValue)
                 }
             }
+        }
+        CommandRegistrationCallback.EVENT.register { dispatcher, context, selection ->
+            dispatcher.register(command)
         }
         init()
         configRoot = FabricLoader.getInstance().configDir

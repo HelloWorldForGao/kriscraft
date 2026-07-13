@@ -1,8 +1,5 @@
 package io.hwfg.kriscraft.config
 
-import com.google.gson.JsonElement
-import io.hwfg.kriscraft.Core
-import io.hwfg.kriscraft.Kriscraft
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphicsExtractor
@@ -14,26 +11,10 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 import net.minecraft.sounds.SoundEvents
 import org.lwjgl.glfw.GLFW
-import java.nio.file.Files
 
 class ConfigScreen : Screen(Component.translatable("kriscraft.ui")) {
-    var configures : MutableMap<String, JsonElement> = mutableMapOf()
-    private var ptrMap : MutableMap<Int,String> = mutableMapOf()
     private var ptr : Int = 0
     private var isMoved = false
-    private inline fun <reified T>addConfig(name : String, default : T){
-        configures[name] = Kriscraft.gson.toJsonTree(default)
-        ptrMap[configures.size - 1] = name
-    }
-    fun indexToString(num : Int) : String? = ptrMap[num]
-    fun stringToIndex(str : String) : Int{
-        var cnt = 0
-        for ((i, _) in configures){
-            if (i == str) return cnt
-            cnt++
-        }
-        return -1
-    }
     fun centerY(genHeight : Int,objectHeight : Int) : Int = genHeight - (objectHeight / 2)
     fun move(){
         Minecraft.getInstance().soundManager.play(
@@ -93,7 +74,7 @@ class ConfigScreen : Screen(Component.translatable("kriscraft.ui")) {
             50,
             0xFFFFFFFF.toInt()
         )
-        for ((i, element) in configures){
+        for ((i, _) in configures){
             val y = centerY(
                 30 * (stringToIndex(i) + 1) + 90,
                 Minecraft.getInstance().font.lineHeight
@@ -107,7 +88,7 @@ class ConfigScreen : Screen(Component.translatable("kriscraft.ui")) {
             )
             graphics.text(
                 Minecraft.getInstance().font,
-                element.toComponent(),
+                getCustomComponent(i),
                 400,
                 y,
                 0xFFFFFFFF.toInt()
@@ -148,30 +129,28 @@ class ConfigScreen : Screen(Component.translatable("kriscraft.ui")) {
             0xFFFFFFFF.toInt()
         )
     }
-
     override fun onClose() {
-        val str = Kriscraft.gson.toJson(configures)
-        Core.logger.info("Write ${str.length} char into kriscraft.json : $str")
-        Files.write(
-            Kriscraft.configFile,
-            str.toByteArray()
-        )
+        save()
         super.onClose()
     }
 
     init {
-        this.addConfig(
-            "test1",
-            false
+        addConfig(
+            "can_eat_moss",
+            true
         )
-        this.addConfig(
-            "test2",
-            false
+        addConfig(
+            "can_eat_moss_block",
+            true
         )
-        this.addConfig(
-            "test3",
-            1
-        )
+        addConfig(
+            "moss_heal",
+            10
+        ){p0 ->
+            val num = p0.toInt()
+            if (num < 0) Component.literal(p0).withStyle(ChatFormatting.RED)
+            else if (num in 0..19) Component.literal(p0)
+            else Component.literal(p0).withStyle(ChatFormatting.GREEN)
+        }
     }
-
 }

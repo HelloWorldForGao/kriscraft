@@ -2,17 +2,25 @@ package io.hwfg.kriscraft
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import io.hwfg.kriscraft.config.configures
+import io.hwfg.kriscraft.mod.negDamage
+import io.hwfg.kriscraft.mod.negHealCount
+import io.hwfg.kriscraft.mod.negHealCriteria
+import io.hwfg.kriscraft.mod.negHealDeathCriteria
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType
 import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder
+import net.minecraft.ChatFormatting
 import net.minecraft.advancements.criterion.ContextAwarePredicate
 import net.minecraft.advancements.criterion.SimpleCriterionTrigger
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
+import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
@@ -55,6 +63,32 @@ object Core {
     }
     fun Player.isHanding(hand : InteractionHand,item : Item) : Boolean = this.getItemInHand(hand).item == item
     fun init() = Unit
+    fun ServerPlayer.mossHeal(){
+        val value = configures["moss_heal"]?.asInt ?: 0
+        if (value >= 0) this.heal(value.toFloat())
+        else {
+            val amount = -value
+            val level = this.level()
+            val source = DamageSource(
+                level.registryAccess()
+                    .lookupOrThrow(Registries.DAMAGE_TYPE)
+                    .getOrThrow(negDamage)
+            )
+            this.hurtServer(level, source,amount.toFloat())
+            negHealCriteria.trigger(
+                this,
+                negHealCount
+            )
+            if (!this.isAlive) negHealDeathCriteria.trigger(
+                this,
+                1
+            )
+        }
+        if (value >= 20) this.sendOverlayMessage(
+            Component.translatable("kriscraft.eatmoss")
+                .withStyle(ChatFormatting.GREEN)
+        )
+    }
     class CountableCriterion : SimpleCriterionTrigger<CountableCondition>() {
         override fun codec(): Codec<CountableCondition> = CountableCondition.codec
         fun trigger(player: ServerPlayer,time : Int) = super.trigger(player){p0 ->

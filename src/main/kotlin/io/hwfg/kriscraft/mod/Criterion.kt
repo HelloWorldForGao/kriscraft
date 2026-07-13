@@ -2,6 +2,7 @@ package io.hwfg.kriscraft.mod
 
 import io.hwfg.kriscraft.Core
 import net.minecraft.advancements.CriteriaTriggers
+import net.minecraft.advancements.criterion.SimpleCriterionTrigger
 import net.minecraft.resources.Identifier
 @JvmField
 val eatMossCriterion = CriteriaTriggers.register(
@@ -21,6 +22,15 @@ val eatMossBreadCriterion = CriteriaTriggers.register(
 @JvmField
 val eatMossBurgerCriterion = CriteriaTriggers.register(
     "kriscraft:eat_moss_burger",
+    Core.CountableCriterion()
+)
+@JvmField val negHealCriteria = CriteriaTriggers.register(
+    "kriscraft:neg_heal",
+    Core.CountableCriterion()
+)
+
+@JvmField val negHealDeathCriteria = CriteriaTriggers.register(
+    "kriscraft:neg_heal_death",
     Core.CountableCriterion()
 )
 

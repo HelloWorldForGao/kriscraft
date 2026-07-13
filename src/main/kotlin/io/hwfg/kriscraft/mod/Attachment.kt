@@ -24,5 +24,9 @@ val eatMossBurgerCount = AttachmentRegistry.createPersistent(
     Identifier.fromNamespaceAndPath("kriscraft","eat_moss_burger"),
     Codec.INT
 )
+@JvmField val negHealCount = AttachmentRegistry.createPersistent(
+    Identifier.fromNamespaceAndPath("kriscraft","neg_heal"),
+    Codec.INT
+)
 
 fun attachmentInit() = Unit

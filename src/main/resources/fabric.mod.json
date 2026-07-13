@@ -40,8 +40,10 @@
         "deltarune"
       ],
       "links" : {
-        "modmenu.general_idea" : "https://store.steampowered.com/app/1671210/DELTARUNE/",
-        "modmenu.genshin" : "https://genshin.hoyoverse.com/"
+        "kriscraft.modmenu.general_idea" : "https://store.steampowered.com/app/1671210/DELTARUNE/",
+        "kriscraft.modmenu.genshin" : "https://genshin.hoyoverse.com/",
+        "kriscraft.modmenu.github" : "https://github.com/HelloWorldForGao/kriscraft",
+        "kriscraft.modmenu.gitee" : "https://gitee.com/AetherAndLumine/kris-craft"
       }
     }
   }
