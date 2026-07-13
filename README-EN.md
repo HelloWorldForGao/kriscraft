@@ -3,7 +3,7 @@
 
 Make the moss in Minecraft more useful!
 
-Added a lot of ITEMS,LOGICS,RECIPES AND ADVANCEMENTS about moss
+Added a lot of ITEMS,LOGICS,RECIPES,ADVANCEMENTS AND UI about moss
 
 ## Added Items
 
@@ -22,8 +22,12 @@ Added a lot of ITEMS,LOGICS,RECIPES AND ADVANCEMENTS about moss
 - 1 Moss Block + 8 Bread(shapeless) => 8 Moss Bread
 - 2 Moss Bread + 1 Any meat => Moss Burger
 
-## Added Advencements
+## Added advancements
 
-- Get advancement by using Moss Block (4 in total)
-- Get advancement by sleeping on Moss Bed (4 in total)
-- Get advancement by eating Moss Bread (4 in total)
+- Get the advancement "KrisCraft" by eating the moss
+- You can also get advancement by sleeping on the moss bed,eating moss bread and eating moss burger
+
+## Added UI
+
+- Added a configure page,open by using key or ModMenu
+- Operate like in the Deltarune!
