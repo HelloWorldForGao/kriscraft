@@ -18,7 +18,7 @@ class Chinese(
         "kriscraft.name" to "Kris工艺",
         "kriscraft.description" to "使MC的苔藓更有用",
         "kriscraft.ui" to "Kris工艺：配置页面",
-        "kriscraft.ui.tip" to "像在三角符文里一样操作！",
+        "kriscraft.ui.tip" to "像在三角符文里一样操作，当你有权限修改服务器配置时按右shift退出可同步至服务器",
         "kriscraft.true" to "是",
         "kriscraft.false" to "否",
         "kriscraft.eatmoss" to "你的生命被苔高到了极藓"
@@ -37,9 +37,11 @@ class Chinese(
         "kriscraft.key.can_eat_moss" to "可以吃苔藓（物品）",
         "kriscraft.key.can_eat_moss_block" to "可以吃苔藓（方块）",
         "kriscraft.key.moss_heal" to "苔藓回复量",
+        "kriscraft.key.moss_product_heal_base_scale" to "苔藓制品基础回复倍率",
         "kriscraft.ui.tip.can_eat_moss" to "是否可以吃苔藓（物品）。注意：当按shift时无论此项是否开启都不会吃苔藓",
         "kriscraft.ui.tip.can_eat_moss_block" to "是否可以吃苔藓（方块）。注意：当按shift时无论此项是否开启都不会吃苔藓",
-        "kriscraft.ui.tip.moss_heal" to "吃一个苔藓回复多少。大于等于20时吃苔藓有特殊提示"
+        "kriscraft.ui.tip.moss_heal" to "吃一个苔藓回复多少。大于等于20时吃苔藓有特殊提示",
+        "kriscraft.ui.tip.moss_product_heal_base_scale" to "苔藓面包的回复倍率，详情见README"
     )
     val zhiZhanZhiShang = mutableMapOf(
         "kriscraft.the_sacrifice_of_stoping_wars1" to "雷德王还有3个小时降临地球",
@@ -50,8 +52,16 @@ class Chinese(
         "kriscraft.the_sacrifice_of_stoping_wars" to "吃 %s 个苔藓汉堡"
     )
     val damageType = mutableMapOf(
-        "death.attack.negative" to "%s 发现苔藓是剧毒的",
-        "death.attack.negative.player" to "%1%s 在 %2%s 的帮助下发现苔藓是剧毒的"
+        "death.attack.negative" to $$"%1$s 发现苔藓是剧毒的",
+        "death.attack.negative.player" to $$"%1$s 在 %2$s 的帮助下发现苔藓是剧毒的"
+    )
+    val key = mutableMapOf(
+        "key.category.kriscraft.default" to "Kris工艺",
+        "kriscraft.key.open" to "打开配置页面"
+    )
+    val command = mapOf(
+        "kriscraft.config.command_executed" to $$"%1$s 被设为了 %2$s",
+        "kriscraft.no_perm" to "权限不足无法同步至服务器。使用Esc退出以避免再次看到此提示"
     )
     val advMainLine = mapOf(
         "kris_root" to listOf(
@@ -72,37 +82,37 @@ class Chinese(
         )
     )
     val advSleepMoss = mapOf(
-        "sleepmoss1" to listOf(
+        "sleep_moss1" to listOf(
             "与藓同眠",
             "藓睡一觉，别的明天再说"
         ),
-        "sleepmoss5" to listOf(
+        "sleep_moss5" to listOf(
             "周一到周五",
             "可能是你运气不好还没找到羊"
         ),
-        "sleepmoss31" to listOf(
+        "sleep_moss31" to listOf(
             "新月的摇篮曲：伴藓同眠",
             "一个月过去了，看来这种子不好"
         ),
-        "sleepmoss365" to listOf(
+        "sleep_moss365" to listOf(
             "一周年了",
             "此处建议删档重开"
         )
     )
     val advEatMossBread = mapOf(
-        "eatmossbread1" to listOf(
+        "eat_moss_bread1" to listOf(
             "新藓的面包",
             "吃一块苔藓面包"
         ),
-        "eatmossbread10" to listOf(
+        "eat_moss_bread10" to listOf(
             "更多新藓的面包",
             "吃10块苔藓面包"
         ),
-        "eatmossbread100" to listOf(
+        "eat_moss_bread100" to listOf(
             "面包苔藓",
             "吃100块苔藓面包"
         ),
-        "eatmossbread30000" to listOf(
+        "eat_moss_bread30000" to listOf(
             "Kris顶号了",
             "吃30000块苔藓面包"
         )
@@ -146,7 +156,8 @@ class Chinese(
             modMenu,
             ui,
             zhiZhanZhiShang,
-            damageType
+            damageType,
+            key
         )
         builder.addAdvancement(
             advMainLine,

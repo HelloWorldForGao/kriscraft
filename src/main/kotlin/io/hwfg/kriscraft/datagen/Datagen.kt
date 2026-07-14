@@ -6,6 +6,7 @@ import io.hwfg.kriscraft.datagen.advancements.MainLine
 import io.hwfg.kriscraft.datagen.advancements.SleepMoss
 import io.hwfg.kriscraft.datagen.advancements.Suicide
 import io.hwfg.kriscraft.datagen.translation.Chinese
+import io.hwfg.kriscraft.datagen.translation.English
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.data.advancements.AdvancementProvider
@@ -28,5 +29,6 @@ class Datagen : DataGeneratorEntrypoint {
             )
         }
         pack.addProvider(::Chinese)
+        pack.addProvider(::English)
     }
 }

@@ -3,38 +3,16 @@ package io.hwfg.kriscraft.config
 import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
 import io.hwfg.kriscraft.Core
+import io.hwfg.kriscraft.Core.get
 import io.hwfg.kriscraft.Kriscraft
-import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper
+import io.hwfg.kriscraft.client.leftActions
+import io.hwfg.kriscraft.client.rightActions
+import io.hwfg.kriscraft.client.shaders
 import net.minecraft.ChatFormatting
-import net.minecraft.client.KeyMapping
-import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.Identifier
-import org.lwjgl.glfw.GLFW
 import java.nio.file.Files
 
-val keyCategory = KeyMapping.Category.register(
-    Identifier.fromNamespaceAndPath("kriscraft","default")
-)
-val open = KeyMappingHelper.registerKeyMapping(
-    KeyMapping(
-        "kriscraft.key.open",
-        GLFW.GLFW_KEY_0,
-        keyCategory
-    )
-)
-var configures : MutableMap<String, JsonElement> = mutableMapOf()
-var ptrMap : MutableMap<Int,String> = mutableMapOf()
-var shaders : MutableMap<String,(String) -> Component> = mutableMapOf()
-fun <T>addConfig(
-    name : String,
-    default : T,
-    shader : ((String) -> Component)? = null
-){
-    if (shader != null) shaders[name] = shader
-    configures[name] = Kriscraft.gson.toJsonTree(default)
-    ptrMap[configures.size - 1] = name
-}
+var configures : LinkedHashMap<String, JsonElement> = LinkedHashMap()
 fun getCustomComponent(name : String) : Component{
     val element = configures[name]
     val factory = shaders[name]
@@ -42,12 +20,10 @@ fun getCustomComponent(name : String) : Component{
     if (factory == null) return element.toComponent()
     else return factory.invoke(element.asString)
 }
-fun indexToString(num : Int) : String? = ptrMap[num]
+fun indexToString(num : Int) : String? = configures[num]?.key
 fun stringToIndex(str : String) : Int{
-    var cnt = 0
-    for ((i, _) in configures){
-        if (i == str) return cnt
-        cnt++
+    configures.entries.forEachIndexed { index, entry ->
+        if (entry.key == str) return index
     }
     return -1
 }
@@ -59,44 +35,6 @@ fun save(){
         str.toByteArray()
     )
 }
-/*val wasd = listOf(
-    KeyMappingHelper.registerKeyMapping(
-        KeyMapping(
-            "kriscraft.key.up",
-            GLFW.GLFW_KEY_UP,
-            keyCategory
-        )
-    ),
-    KeyMappingHelper.registerKeyMapping(
-        KeyMapping(
-            "kriscraft.key.left",
-            GLFW.GLFW_KEY_LEFT,
-            keyCategory
-        )
-    ),
-    KeyMappingHelper.registerKeyMapping(
-        KeyMapping(
-            "kriscraft.key.down",
-            GLFW.GLFW_KEY_DOWN,
-            keyCategory
-        )
-    ),
-    KeyMappingHelper.registerKeyMapping(
-        KeyMapping(
-            "kriscraft.key.right",
-            GLFW.GLFW_KEY_RIGHT,
-            keyCategory
-        )
-    )
-)
-val pause = KeyMappingHelper.registerKeyMapping(
-    KeyMapping(
-        "kriscraft.key.pause",
-        GLFW.GLFW_KEY_RIGHT_SHIFT,
-        keyCategory
-    )
-)*/
-val screen = ConfigScreen()
 fun JsonElement.toComponent() : Component{
     return if (this.isJsonPrimitive){
         if (this.asJsonPrimitive.isBoolean){
@@ -111,31 +49,33 @@ fun JsonElement.toComponent() : Component{
     }
     else Component.literal(this.toString())
 }
-fun JsonElement.change(isLeft : Boolean) : JsonElement{
+fun JsonElement.defaultChange(isLeft : Boolean) : JsonElement{
     if (this.isJsonPrimitive){
         if (this.asJsonPrimitive.isBoolean){
-            if (this.asBoolean) return toJsonElement(false)
-            else return toJsonElement(true)
+            if (this.asBoolean) return jsonElement(false)
+            else return jsonElement(true)
         }
         else if (this.asJsonPrimitive.isNumber){
-            if (isLeft) return toJsonElement(this.asInt - 1)
-            else return toJsonElement(this.asInt + 1)
+            if (isLeft) return jsonElement(this.asInt - 1)
+            else return jsonElement(this.asInt + 1)
         }
     }
     return this
 }
+
 inline fun <reified T>JsonElement.fromJsonElement() : T = Kriscraft.gson
     .fromJson(this,object : TypeToken<T>(){}.type)
-fun toJsonElement(obj : Any) : JsonElement = Kriscraft.gson.toJsonTree(obj)
+fun jsonElement(obj : Any) : JsonElement = Kriscraft.gson.toJsonTree(obj)
+fun Any.toJsonElement() : JsonElement = jsonElement(this)
 
 fun configureInit(){
     val str = Files.readString(
         Kriscraft.configFile
     )
     Core.logger.info("Read ${str.length} bytes : $str")
-    val temp = Kriscraft.gson.fromJson<MutableMap<String, JsonElement>>(
+    val temp = Kriscraft.gson.fromJson<LinkedHashMap<String, JsonElement>>(
         str,
-        object : TypeToken<MutableMap<String, JsonElement>>() {}.type
+        object : TypeToken<LinkedHashMap<String, JsonElement>>() {}.type
     ) ?: return
     for ((p0,p1) in temp) configures[p0] = p1
 }

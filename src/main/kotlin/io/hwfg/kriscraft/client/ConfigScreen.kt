@@ -1,5 +1,7 @@
-package io.hwfg.kriscraft.config
+package io.hwfg.kriscraft.client
 
+import io.hwfg.kriscraft.Core.get
+import io.hwfg.kriscraft.config.*
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphicsExtractor
@@ -9,6 +11,7 @@ import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.client.resources.sounds.SimpleSoundInstance
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
+import net.minecraft.server.permissions.Permissions
 import net.minecraft.sounds.SoundEvents
 import org.lwjgl.glfw.GLFW
 
@@ -39,12 +42,13 @@ class ConfigScreen : Screen(Component.translatable("kriscraft.ui")) {
     fun left(){
         move()
         //configures[ptr].left()
-        configures[indexToString(ptr) ?: ""] = configures[indexToString(ptr)]?.change(true) ?: return
+        changeLeft(ptr)
     }
     fun right(){
         move()
         //configures[ptr].right()
-        configures[indexToString(ptr) ?: ""] = configures[indexToString(ptr)]?.change(false) ?: return
+        //configures[indexToString(ptr) ?: ""] = configures[indexToString(ptr)]?.defaultChange(false) ?: return
+        changeRight(ptr)
     }
 
     override fun keyReleased(event: KeyEvent): Boolean {
@@ -55,6 +59,7 @@ class ConfigScreen : Screen(Component.translatable("kriscraft.ui")) {
         if (event.key == GLFW.GLFW_KEY_RIGHT_SHIFT){
             Minecraft.getInstance().setScreen(null)
             onClose()
+            onSpecClose()
         }
         return super.keyReleased(event)
     }
@@ -123,11 +128,21 @@ class ConfigScreen : Screen(Component.translatable("kriscraft.ui")) {
         )
         else graphics.text(
             Minecraft.getInstance().font,
-            Component.translatable("kriscraft.ui.tip.${indexToString(ptr)}").withStyle(ChatFormatting.GOLD),
+            Component.translatable("kriscraft.ui.tip.${configures[ptr]?.key}").withStyle(ChatFormatting.GOLD),
             100,
             this.height - 20,
             0xFFFFFFFF.toInt()
         )
+    }
+    fun onSpecClose(){
+        val local = Minecraft.getInstance().player ?: return
+        if (local.permissions().hasPermission(Permissions.COMMANDS_MODERATOR)){
+            //kriscraft config can_eat_moss true
+            for ((i,j) in configures){
+                local.connection.sendCommand("kriscraft config $i ${j.asString}")
+            }
+        }
+        else local.sendOverlayMessage(Component.translatable("kriscraft.no_perm"))
     }
     override fun onClose() {
         save()
@@ -145,12 +160,35 @@ class ConfigScreen : Screen(Component.translatable("kriscraft.ui")) {
         )
         addConfig(
             "moss_heal",
-            10
-        ){p0 ->
-            val num = p0.toInt()
-            if (num < 0) Component.literal(p0).withStyle(ChatFormatting.RED)
-            else if (num in 0..19) Component.literal(p0)
-            else Component.literal(p0).withStyle(ChatFormatting.GREEN)
-        }
+            10,
+            { p0 ->
+                val num = p0.toInt()
+                if (num < 0) Component.literal(p0).withStyle(ChatFormatting.RED)
+                else if (num in 0..19) Component.literal(p0)
+                else Component.literal(p0).withStyle(ChatFormatting.GREEN)
+            },{p0 ->
+                val value = p0.asInt
+                if (value == -20) p0
+                else (value - 1).toJsonElement()
+            },{p0 ->
+                val value = p0.asInt
+                if (value == 20) p0
+                else (value + 1).toJsonElement()
+            }
+        )
+        addConfig(
+            "moss_product_heal_base_scale",
+            1,
+            null,
+            {p0 ->
+                val value = p0.asInt
+                if (value == 0) p0
+                else (value - 1).toJsonElement()
+            },{p0 ->
+                val value = p0.asInt
+                if (value == 3) p0
+                else (value + 1).toJsonElement()
+            }
+        )
     }
 }

@@ -10,7 +10,10 @@
   "icon": "assets/kriscraft/Kris.png",
   "environment": "*",
   "mixins": [
-    "kriscraft.mixins.json"
+    {
+      "config": "kriscraft.mixins.client.json",
+      "environment": "client"
+    }
   ],
   "entrypoints": {
     "client": [

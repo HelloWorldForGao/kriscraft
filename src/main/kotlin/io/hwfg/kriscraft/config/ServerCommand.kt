@@ -2,6 +2,7 @@ package io.hwfg.kriscraft.config
 
 import com.google.gson.JsonParser
 import com.mojang.brigadier.arguments.StringArgumentType
+import io.hwfg.kriscraft.Core
 import net.minecraft.ChatFormatting
 import net.minecraft.commands.Commands
 import net.minecraft.network.chat.Component
@@ -39,8 +40,10 @@ val command = Commands.literal("kriscraft")
                                 val value = p0.getArgument("value", String::class.java)
                                 if (name !in configures.keys) return@executes 0
                                 configures[name] = JsonParser.parseString(value)
+                                Core.logger.info("Changed $name : $value")
                                 1
                             }
                     )
             )
     )
+fun commandInit() = Unit

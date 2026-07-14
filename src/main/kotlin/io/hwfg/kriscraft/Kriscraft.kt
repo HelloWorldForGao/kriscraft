@@ -3,6 +3,7 @@ package io.hwfg.kriscraft
 import com.google.gson.Gson
 import io.hwfg.kriscraft.Core.mossHeal
 import io.hwfg.kriscraft.config.command
+import io.hwfg.kriscraft.config.commandInit
 import io.hwfg.kriscraft.config.configureInit
 import io.hwfg.kriscraft.config.configures
 import io.hwfg.kriscraft.mod.*
@@ -31,6 +32,7 @@ class Kriscraft : ModInitializer {
     companion object{
         lateinit var configRoot : Path
         lateinit var configFile : Path
+        var latestDeltarune = 5
         val gson : Gson = Gson().newBuilder()
             .setPrettyPrinting()
             .create()
@@ -82,7 +84,6 @@ class Kriscraft : ModInitializer {
     override fun onInitialize() {
         Core.logger.info("Loading KrisCraft...")
         Core.init()
-        val latestDeltarune = 5
         UseItemCallback.EVENT.register { player, level, hand ->
             if (configures["can_eat_moss"]?.asBoolean == true) eatMoss(player, level, hand)
             else InteractionResult.PASS
@@ -122,5 +123,6 @@ class Kriscraft : ModInitializer {
         criterionInit()
         effectInit()
         itemInit()
+        commandInit()
     }
 }

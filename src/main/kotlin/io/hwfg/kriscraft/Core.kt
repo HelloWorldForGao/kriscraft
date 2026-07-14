@@ -63,9 +63,9 @@ object Core {
     }
     fun Player.isHanding(hand : InteractionHand,item : Item) : Boolean = this.getItemInHand(hand).item == item
     fun init() = Unit
-    fun ServerPlayer.mossHeal(){
+    fun ServerPlayer.mossHeal(scale : Float = 1F){
         val value = configures["moss_heal"]?.asInt ?: 0
-        if (value >= 0) this.heal(value.toFloat())
+        if (value >= 0) this.heal(value.toFloat() * scale)
         else {
             val amount = -value
             val level = this.level()
@@ -74,7 +74,7 @@ object Core {
                     .lookupOrThrow(Registries.DAMAGE_TYPE)
                     .getOrThrow(negDamage)
             )
-            this.hurtServer(level, source,amount.toFloat())
+            this.hurtServer(level, source,amount.toFloat() * scale)
             negHealCriteria.trigger(
                 this,
                 negHealCount
@@ -89,6 +89,13 @@ object Core {
                 .withStyle(ChatFormatting.GREEN)
         )
     }
+    operator fun <A> Set<A>.get(index: Int): A? {
+        this.forEachIndexed { i, a ->
+            if (i == index) return a
+        }
+        return null
+    }
+    operator fun <K,V> Map<K,V>.get(index : Int) : Map.Entry<K,V>? = this.entries[index]
     class CountableCriterion : SimpleCriterionTrigger<CountableCondition>() {
         override fun codec(): Codec<CountableCondition> = CountableCondition.codec
         fun trigger(player: ServerPlayer,time : Int) = super.trigger(player){p0 ->
