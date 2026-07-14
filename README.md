@@ -31,3 +31,5 @@ Added a lot of ITEMS,LOGICS,RECIPES,ADVANCEMENTS AND UI about moss 添加了一�
 
 - Added a configure page,open by using key or ModMenu 多出了一个配置页面，可以通过快捷键或ModMenu打开
 - Operate like in the Deltarune! 像在Deltarune里一样操作！
+- Sync your change with the server(if you have the perm) by exiting with shift 使用shift退出以同步你的更改到服务器（只要你有那个权限）
+- Only save to the client config file by exiting with esc 使用esc退出将只在本地保存

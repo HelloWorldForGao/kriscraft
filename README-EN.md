@@ -31,3 +31,5 @@ Added a lot of ITEMS,LOGICS,RECIPES,ADVANCEMENTS AND UI about moss
 
 - Added a configure page,open by using key or ModMenu
 - Operate like in the Deltarune!
+- Sync your change with the server(if you have the perm) by exiting with shift
+- Only save to the client config file by exiting with esc
