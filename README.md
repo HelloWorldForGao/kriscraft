@@ -44,4 +44,4 @@ Added a lot of items,logics,recipes,advancement,ui and command about moss
 - Deltarune : provided the idea
 - JetBrains : provided the IDEA and the kotlin
 - Zheng fanghao : provided the Zhi Zhanzhishang(The sacrifice of stoping wars)
-- https://namemc.com/skin/c5e8883a20c16801 : provided the icon
+- [See this hyperlink](https://namemc.com/skin/c5e8883a20c16801) : provided the icon
