@@ -3,9 +3,20 @@
   "id": "kriscraft",
   "version": "${version}",
   "name": "KrisCraft",
-  "description": "Your HP was mossed out when you see this mod,the power of this mod is shining in your soul.",
-  "authors": [],
-  "contact": {},
+  "description": "Make the moss in Minecraft more useful!",
+  "authors": [
+    {
+      "name" : "AetherAndLumine",
+      "contact" : {
+        "email" : "234294308@qq.com"
+      }
+    }
+  ],
+  "contact": {
+    "sources" : "https://github.com/HelloWorldForGao/kriscraft",
+    "issues" : "https://github.com/HelloWorldForGao/kriscraft/issues",
+    "email" : "234294308@qq.com"
+  },
   "license": "WTFPL",
   "icon": "assets/kriscraft/Kris.png",
   "environment": "*",
@@ -18,6 +29,9 @@
   "entrypoints": {
     "client": [
       "io.hwfg.kriscraft.client.KriscraftClient"
+    ],
+    "server" : [
+      "io.hwfg.kriscraft.KriscraftServer"
     ],
     "main": [
       "io.hwfg.kriscraft.Kriscraft"

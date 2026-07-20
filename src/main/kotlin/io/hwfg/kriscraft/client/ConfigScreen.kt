@@ -179,10 +179,15 @@ class ConfigScreen : Screen(Component.translatable("kriscraft.ui")) {
         addConfig(
             "moss_product_heal_base_scale",
             1,
-            null,
+            {p0 ->
+                val num = p0.toInt() * (configures["moss_heal"]?.asInt ?: 0)
+                if (num < 0) Component.literal(p0).withStyle(ChatFormatting.RED)
+                else if (num == 0) Component.literal(p0)
+                else Component.literal(p0).withStyle(ChatFormatting.GREEN)
+            },
             {p0 ->
                 val value = p0.asInt
-                if (value == 0) p0
+                if (value == -3) p0
                 else (value - 1).toJsonElement()
             },{p0 ->
                 val value = p0.asInt

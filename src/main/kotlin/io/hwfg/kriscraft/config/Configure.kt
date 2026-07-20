@@ -5,12 +5,13 @@ import com.google.gson.reflect.TypeToken
 import io.hwfg.kriscraft.Core
 import io.hwfg.kriscraft.Core.get
 import io.hwfg.kriscraft.Kriscraft
-import io.hwfg.kriscraft.client.leftActions
-import io.hwfg.kriscraft.client.rightActions
+import io.hwfg.kriscraft.Kriscraft.Companion.configFile
+import io.hwfg.kriscraft.Kriscraft.Companion.configRoot
 import io.hwfg.kriscraft.client.shaders
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import java.nio.file.Files
+import kotlin.io.path.notExists
 
 var configures : LinkedHashMap<String, JsonElement> = LinkedHashMap()
 fun getCustomComponent(name : String) : Component{
@@ -31,7 +32,7 @@ fun save(){
     val str = Kriscraft.gson.toJson(configures)
     Core.logger.info("Write ${str.length} char into kriscraft.json : $str")
     Files.write(
-        Kriscraft.configFile,
+        configFile,
         str.toByteArray()
     )
 }
@@ -69,8 +70,10 @@ fun jsonElement(obj : Any) : JsonElement = Kriscraft.gson.toJsonTree(obj)
 fun Any.toJsonElement() : JsonElement = jsonElement(this)
 
 fun configureInit(){
+    if (configRoot.notExists()) Files.createDirectories(configRoot)
+    if (configFile.notExists()) Files.createFile(configFile)
     val str = Files.readString(
-        Kriscraft.configFile
+        configFile
     )
     Core.logger.info("Read ${str.length} bytes : $str")
     val temp = Kriscraft.gson.fromJson<LinkedHashMap<String, JsonElement>>(

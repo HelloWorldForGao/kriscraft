@@ -53,7 +53,9 @@ class Chinese(
     )
     val damageType = mutableMapOf(
         "death.attack.negative" to $$"%1$s 发现苔藓是剧毒的",
-        "death.attack.negative.player" to $$"%1$s 在 %2$s 的帮助下发现苔藓是剧毒的"
+        "death.attack.negative.player" to $$"%1$s 在 %2$s 的帮助下发现苔藓是剧毒的",
+        "death.attack.snowgrave" to $$"%1$s 对自己释放了雪葬",
+        "death.attack.snowgrave.player" to $$"%2$s 对 %1$s 释放了雪葬"
     )
     val key = mutableMapOf(
         "key.category.kriscraft.default" to "Kris工艺",
@@ -129,6 +131,10 @@ class Chinese(
         "neg_heal_death" to listOf(
             "吃好喝好一路走好",
             "被苔藓的反向治疗治死"
+        ),
+        "snowgrave" to listOf(
+            "速冻食品",
+            "遭受一次雪葬的重创"
         )
     )
     fun TranslationBuilder.addMap(vararg p0 : Map<String, String>){
@@ -141,7 +147,7 @@ class Chinese(
     fun TranslationBuilder.addAdvancement(vararg p0 : Map<String, List<String>>){
         for (k in p0){
             for ((i, j) in k) {
-                val key = "kriscraft.advancement.$i"
+                val key = "kriscraft.adv.$i"
                 this.add("$key.title", j[0])
                 this.add("$key.description", j[1])
             }
@@ -157,7 +163,8 @@ class Chinese(
             ui,
             zhiZhanZhiShang,
             damageType,
-            key
+            key,
+            command
         )
         builder.addAdvancement(
             advMainLine,

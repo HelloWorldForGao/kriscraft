@@ -1,5 +1,6 @@
 package io.hwfg.kriscraft.item
 
+import io.hwfg.kriscraft.Core.tryToTrigger
 import io.hwfg.kriscraft.mod.eatMossBreadCount
 import io.hwfg.kriscraft.mod.eatMossBreadCriterion
 import io.hwfg.kriscraft.mod.mossyEffect
@@ -60,6 +61,7 @@ class MossBread : Item(
             p2,
             eatMossBreadCount
         )
+        p2.tryToTrigger()
         return super.finishUsingItem(p0, p1, p2)
     }
 }

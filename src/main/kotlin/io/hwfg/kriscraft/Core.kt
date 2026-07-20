@@ -63,9 +63,18 @@ object Core {
     }
     fun Player.isHanding(hand : InteractionHand,item : Item) : Boolean = this.getItemInHand(hand).item == item
     fun init() = Unit
+    fun ServerPlayer.tryToTrigger(){
+        val value = configures["moss_heal"]?.asInt ?: 0
+        if (value < 0) {
+            negHealCriteria.trigger(
+                this,
+                negHealCount
+            )
+        }
+    }
     fun ServerPlayer.mossHeal(scale : Float = 1F){
         val value = configures["moss_heal"]?.asInt ?: 0
-        if (value >= 0) this.heal(value.toFloat() * scale)
+        if (value * scale >= 0) this.heal(value.toFloat() * scale)
         else {
             val amount = -value
             val level = this.level()
@@ -75,14 +84,7 @@ object Core {
                     .getOrThrow(negDamage)
             )
             this.hurtServer(level, source,amount.toFloat() * scale)
-            negHealCriteria.trigger(
-                this,
-                negHealCount
-            )
-            if (!this.isAlive) negHealDeathCriteria.trigger(
-                this,
-                1
-            )
+            if (!this.isAlive) negHealDeathCriteria.trigger(this)
         }
         if (value >= 20) this.sendOverlayMessage(
             Component.translatable("kriscraft.eatmoss")
@@ -106,7 +108,6 @@ object Core {
             player.addAndGet(attachment,num)
         )
     }
-
     data class CountableCondition(
         val p0 : Optional<ContextAwarePredicate>,
         val time : Int
@@ -119,6 +120,19 @@ object Core {
                     Codec.INT.fieldOf("time").forGetter(CountableCondition::time)
                 ).apply(p0,::CountableCondition)
             }
+        }
+    }
+
+    class SingleCriterion : SimpleCriterionTrigger<SingleCondition>(){
+        override fun codec(): Codec<SingleCondition> = SingleCondition.codec
+        fun trigger(player: ServerPlayer) = super.trigger(player) { true }
+    }
+    data class SingleCondition(val p0 : Optional<ContextAwarePredicate>) : SimpleCriterionTrigger.SimpleInstance{
+        override fun player(): Optional<ContextAwarePredicate> = p0
+        companion object{
+            val codec: Codec<SingleCondition> = ContextAwarePredicate.CODEC.optionalFieldOf("player")
+                .xmap(::SingleCondition, SingleCondition::player)
+                .codec()
         }
     }
 }

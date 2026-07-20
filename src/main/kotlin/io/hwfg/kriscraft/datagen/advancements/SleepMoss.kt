@@ -29,8 +29,8 @@ class SleepMoss : AdvancementSubProvider {
             .parent(krisRoot)
             .display(
                 mossBedBlock.asItem(),
-                Component.translatable("kriscraft.advancement.sleep_moss1.title"),
-                Component.translatable("kriscraft.advancement.sleep_moss1.description"),
+                Component.translatable("kriscraft.adv.sleep_moss1.title"),
+                Component.translatable("kriscraft.adv.sleep_moss1.description"),
                 null,
                 AdvancementType.TASK,
                 true,
@@ -54,8 +54,8 @@ class SleepMoss : AdvancementSubProvider {
             .parent(sleep1)
             .display(
                 mossBedBlock.asItem(),
-                Component.translatable("kriscraft.advancement.sleep_moss5.title"),
-                Component.translatable("kriscraft.advancement.sleep_moss5.description"),
+                Component.translatable("kriscraft.adv.sleep_moss5.title"),
+                Component.translatable("kriscraft.adv.sleep_moss5.description"),
                 null,
                 AdvancementType.TASK,
                 true,
@@ -79,8 +79,8 @@ class SleepMoss : AdvancementSubProvider {
             .parent(sleep5)
             .display(
                 mossBedBlock.asItem(),
-                Component.translatable("kriscraft.advancement.sleep_moss31.title"),
-                Component.translatable("kriscraft.advancement.sleep_moss31.description"),
+                Component.translatable("kriscraft.adv.sleep_moss31.title"),
+                Component.translatable("kriscraft.adv.sleep_moss31.description"),
                 null,
                 AdvancementType.GOAL,
                 true,
@@ -104,8 +104,8 @@ class SleepMoss : AdvancementSubProvider {
             .parent(sleep31)
             .display(
                 mossBedBlock.asItem(),
-                Component.translatable("kriscraft.advancement.sleep_moss365.title"),
-                Component.translatable("kriscraft.advancement.sleep_moss365.description"),
+                Component.translatable("kriscraft.adv.sleep_moss365.title"),
+                Component.translatable("kriscraft.adv.sleep_moss365.description"),
                 null,
                 AdvancementType.CHALLENGE,
                 true,

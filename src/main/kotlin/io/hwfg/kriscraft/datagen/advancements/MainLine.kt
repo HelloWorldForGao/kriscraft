@@ -28,8 +28,8 @@ class MainLine : AdvancementSubProvider  {
         krisRoot = Advancement.Builder.advancement()
             .display(
                 Items.MOSS_BLOCK,
-                Component.translatable("kriscraft.advancement.kris_root.title"),
-                Component.translatable("kriscraft.advancement.kris_root.description"),
+                Component.translatable("kriscraft.adv.kris_root.title"),
+                Component.translatable("kriscraft.adv.kris_root.description"),
                 Identifier.fromNamespaceAndPath(
                     "kriscraft",
                     "gui/advancements/backgrounds/moss"
@@ -56,8 +56,8 @@ class MainLine : AdvancementSubProvider  {
             .parent(krisRoot)
             .display(
                 Items.MOSS_BLOCK,
-                Component.translatable("kriscraft.advancement.kris10.title"),
-                Component.translatable("kriscraft.advancement.kris10.description"),
+                Component.translatable("kriscraft.adv.kris10.title"),
+                Component.translatable("kriscraft.adv.kris10.description"),
                 null,
                 AdvancementType.TASK,
                 true,
@@ -81,8 +81,8 @@ class MainLine : AdvancementSubProvider  {
             .parent(kris10)
             .display(
                 Items.MOSS_BLOCK,
-                Component.translatable("kriscraft.advancement.kris100.title"),
-                Component.translatable("kriscraft.advancement.kris100.description"),
+                Component.translatable("kriscraft.adv.kris100.title"),
+                Component.translatable("kriscraft.adv.kris100.description"),
                 null,
                 AdvancementType.GOAL,
                 true,
@@ -106,8 +106,8 @@ class MainLine : AdvancementSubProvider  {
             .parent(kris100)
             .display(
                 Items.MOSS_BLOCK,
-                Component.translatable("kriscraft.advancement.kris30000.title"),
-                Component.translatable("kriscraft.advancement.kris30000.description"),
+                Component.translatable("kriscraft.adv.kris30000.title"),
+                Component.translatable("kriscraft.adv.kris30000.description"),
                 null,
                 AdvancementType.CHALLENGE,
                 true,

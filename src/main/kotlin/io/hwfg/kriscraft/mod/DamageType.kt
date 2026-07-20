@@ -11,3 +11,11 @@ val negDamage = ResourceKey.create(
         "negative"
     )
 )
+
+val snowgrave = ResourceKey.create(
+    Registries.DAMAGE_TYPE,
+    Identifier.fromNamespaceAndPath(
+        "kriscraft",
+        "snowgrave"
+    )
+)

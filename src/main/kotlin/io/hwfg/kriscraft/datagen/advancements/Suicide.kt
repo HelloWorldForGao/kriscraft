@@ -3,6 +3,7 @@ package io.hwfg.kriscraft.datagen.advancements
 import io.hwfg.kriscraft.Core
 import io.hwfg.kriscraft.mod.negHealCriteria
 import io.hwfg.kriscraft.mod.negHealDeathCriteria
+import io.hwfg.kriscraft.mod.snowgraveDeathCriteria
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType
@@ -18,6 +19,7 @@ class Suicide : AdvancementSubProvider {
         lateinit var neg_heal1 : AdvancementHolder
         lateinit var neg_heal10 : AdvancementHolder
         lateinit var neg_heal_death : AdvancementHolder
+        lateinit var snowgrave : AdvancementHolder
     }
     override fun generate(
         registries: HolderLookup.Provider,
@@ -28,8 +30,8 @@ class Suicide : AdvancementSubProvider {
             .parent(MainLine.krisRoot)
             .display(
                 Items.POTION,
-                Component.translatable("kriscraft.advancement.neg_heal1.title"),
-                Component.translatable("kriscraft.advancement.neg_heal1.description"),
+                Component.translatable("kriscraft.adv.neg_heal1.title"),
+                Component.translatable("kriscraft.adv.neg_heal1.description"),
                 null,
                 AdvancementType.GOAL,
                 true,
@@ -51,8 +53,8 @@ class Suicide : AdvancementSubProvider {
             .parent(neg_heal1)
             .display(
                 Items.POTION,
-                Component.translatable("kriscraft.advancement.neg_heal10.title"),
-                Component.translatable("kriscraft.advancement.neg_heal10.description"),
+                Component.translatable("kriscraft.adv.neg_heal10.title"),
+                Component.translatable("kriscraft.adv.neg_heal10.description"),
                 null,
                 AdvancementType.GOAL,
                 true,
@@ -74,8 +76,8 @@ class Suicide : AdvancementSubProvider {
             .parent(neg_heal1)
             .display(
                 Items.POTION,
-                Component.translatable("kriscraft.advancement.neg_heal_death.title"),
-                Component.translatable("kriscraft.advancement.neg_heal_death.description"),
+                Component.translatable("kriscraft.adv.neg_heal_death.title"),
+                Component.translatable("kriscraft.adv.neg_heal_death.description"),
                 null,
                 AdvancementType.CHALLENGE,
                 true,
@@ -85,12 +87,29 @@ class Suicide : AdvancementSubProvider {
             .addCriterion(
                 "how_can_you_see_this",
                 negHealDeathCriteria.createCriterion(
-                    Core.CountableCondition(
-                        Optional.empty(),
-                        1
+                    Core.SingleCondition(
+                        Optional.empty()
                     )
                 )
             )
             .save(output,"kriscraft:neg_heal_death")
+        snowgrave = Advancement.Builder
+            .advancement()
+            .parent(SleepMoss.sleep1)
+            .display(
+                Items.SNOWBALL,
+                Component.translatable("kriscraft.adv.snowgrave.title"),
+                Component.translatable("kriscraft.adv.snowgrave.description"),
+                null,
+                AdvancementType.CHALLENGE,
+                true,
+                true,
+                true
+            )
+            .addCriterion(
+                "are_you_using_betteradvancements",
+                snowgraveDeathCriteria.createCriterion(Core.SingleCondition(Optional.empty()))
+            )
+            .save(output,"kriscraft.snowgrave")
     }
 }

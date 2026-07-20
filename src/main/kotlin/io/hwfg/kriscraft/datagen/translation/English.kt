@@ -53,7 +53,9 @@ class English(
     )
     val damageType = mutableMapOf(
         "death.attack.negative" to $$"%1$s have found out that the moss was harmful",
-        "death.attack.negative.player" to $$"%1$s have found out that the moss was harmful with the help of %2$s"
+        "death.attack.negative.player" to $$"%1$s have found out that the moss was harmful with the help of %2$s",
+        "death.attack.snowgrave" to $$"%1$s released the snowgrave to himself",
+        "death.attack.snowgrave.player" to $$"%2$s released the snowgrave to %1$s "
     )
     val key = mutableMapOf(
         "key.category.kriscraft.default" to "Kris craft",
@@ -129,6 +131,10 @@ class English(
         "neg_heal_death" to listOf(
             "Deadly moss",
             "The moss was harmful"
+        ),
+        "snowgrave" to listOf(
+            "Quick-frozen food",
+            "Bore the damage from the snowgrave"
         )
     )
     fun TranslationBuilder.addMap(vararg p0 : Map<String, String>){
@@ -141,7 +147,7 @@ class English(
     fun TranslationBuilder.addAdvancement(vararg p0 : Map<String, List<String>>){
         for (k in p0){
             for ((i, j) in k) {
-                val key = "kriscraft.advancement.$i"
+                val key = "kriscraft.adv.$i"
                 this.add("$key.title", j[0])
                 this.add("$key.description", j[1])
             }
@@ -157,7 +163,8 @@ class English(
             ui,
             zhiZhanZhiShang,
             damageType,
-            key
+            key,
+            command
         )
         builder.addAdvancement(
             advMainLine,

@@ -28,8 +28,8 @@ class EatMossBread : AdvancementSubProvider{
             .parent(SleepMoss.sleep1)
             .display(
                 mossBread,
-                Component.translatable("kriscraft.advancement.eat_moss_bread1.title"),
-                Component.translatable("kriscraft.advancement.eat_moss_bread1.description"),
+                Component.translatable("kriscraft.adv.eat_moss_bread1.title"),
+                Component.translatable("kriscraft.adv.eat_moss_bread1.description"),
                 null,
                 AdvancementType.TASK,
                 true,
@@ -54,8 +54,8 @@ class EatMossBread : AdvancementSubProvider{
             .parent(moss_bread1)
             .display(
                 mossBread,
-                Component.translatable("kriscraft.advancement.eat_moss_bread10.title"),
-                Component.translatable("kriscraft.advancement.eat_moss_bread10.description"),
+                Component.translatable("kriscraft.adv.eat_moss_bread10.title"),
+                Component.translatable("kriscraft.adv.eat_moss_bread10.description"),
                 null,
                 AdvancementType.TASK,
                 true,
@@ -80,8 +80,8 @@ class EatMossBread : AdvancementSubProvider{
             .parent(moss_bread10)
             .display(
                 mossBread,
-                Component.translatable("kriscraft.advancement.eat_moss_bread100.title"),
-                Component.translatable("kriscraft.advancement.eat_moss_bread100.description"),
+                Component.translatable("kriscraft.adv.eat_moss_bread100.title"),
+                Component.translatable("kriscraft.adv.eat_moss_bread100.description"),
                 null,
                 AdvancementType.GOAL,
                 true,
@@ -106,8 +106,8 @@ class EatMossBread : AdvancementSubProvider{
             .parent(moss_bread100)
             .display(
                 mossBread,
-                Component.translatable("kriscraft.advancement.eat_moss_bread30000.title"),
-                Component.translatable("kriscraft.advancement.eat_moss_bread30000.description"),
+                Component.translatable("kriscraft.adv.eat_moss_bread30000.title"),
+                Component.translatable("kriscraft.adv.eat_moss_bread30000.description"),
                 null,
                 AdvancementType.CHALLENGE,
                 true,

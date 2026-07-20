@@ -1,9 +1,10 @@
 package io.hwfg.kriscraft
 
 import com.google.gson.Gson
+import io.hwfg.kriscraft.Core.addAndGet
 import io.hwfg.kriscraft.Core.mossHeal
-import io.hwfg.kriscraft.config.command
-import io.hwfg.kriscraft.config.commandInit
+import io.hwfg.kriscraft.mod.command
+import io.hwfg.kriscraft.mod.commandInit
 import io.hwfg.kriscraft.config.configureInit
 import io.hwfg.kriscraft.config.configures
 import io.hwfg.kriscraft.mod.*
@@ -15,7 +16,6 @@ import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.client.Minecraft
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -24,9 +24,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.phys.BlockHitResult
-import java.nio.file.Files
 import java.nio.file.Path
-import kotlin.io.path.notExists
 
 class Kriscraft : ModInitializer {
     companion object{
@@ -48,10 +46,13 @@ class Kriscraft : ModInitializer {
             if (!level.isClientSide){
                 val serverPlayer = player as ServerPlayer
                 serverPlayer.mossHeal()
-                val mossCount = serverPlayer.getAttached(mossCount) ?: 0
-                val newCount = mossCount + 1
-                eatMossCriterion.trigger(serverPlayer,newCount)
-                serverPlayer.setAttached(io.hwfg.kriscraft.mod.mossCount,newCount)
+                eatMossCriterion.trigger(
+                    serverPlayer,
+                    serverPlayer.addAndGet(
+                        mossCount,
+                        1
+                    )
+                )
             }
             return InteractionResult.SUCCESS
         }
@@ -72,10 +73,13 @@ class Kriscraft : ModInitializer {
             if (!level.isClientSide){
                 val serverPlayer = player as ServerPlayer
                 serverPlayer.mossHeal()
-                val mossCount = serverPlayer.getAttached(mossCount) ?: 0
-                val newCount = mossCount + 1
-                eatMossCriterion.trigger(serverPlayer,newCount)
-                serverPlayer.setAttached(io.hwfg.kriscraft.mod.mossCount,newCount)
+                eatMossCriterion.trigger(
+                    serverPlayer,
+                    serverPlayer.addAndGet(
+                        mossCount,
+                        1
+                    )
+                )
             }
             return InteractionResult.SUCCESS
         }
@@ -83,7 +87,23 @@ class Kriscraft : ModInitializer {
     }
     override fun onInitialize() {
         Core.logger.info("Loading KrisCraft...")
+        configRoot = FabricLoader.getInstance().configDir
+        configFile = configRoot.resolve("kriscraft.json")
+        regEvent()
+        init()
+        Core.logger.info("Waiting for the Deltarune Chapter ${latestDeltarune + 1}")
+    }
+    fun init(){
         Core.init()
+        attachmentInit()
+        blockInit()
+        criterionInit()
+        effectInit()
+        itemInit()
+        commandInit()
+        configureInit()
+    }
+    fun regEvent(){
         UseItemCallback.EVENT.register { player, level, hand ->
             if (configures["can_eat_moss"]?.asBoolean == true) eatMoss(player, level, hand)
             else InteractionResult.PASS
@@ -99,30 +119,19 @@ class Kriscraft : ModInitializer {
         EntitySleepEvents.START_SLEEPING.register { entity, pos ->
             if (entity is ServerPlayer){
                 if (entity.level().getBlockEntity(pos) is MossBedBlockEntity){
-                    val oldValue = entity.getAttached(sleepMossCount) ?: 0
-                    val newValue = oldValue + 1
-                    sleepMossCriterion.trigger(entity,newValue)
-                    entity.setAttached(sleepMossCount,newValue)
+                    sleepMossCriterion.trigger(
+                        entity,
+                        entity.addAndGet(
+                            sleepMossCount,
+                            1
+                        )
+                    )
                 }
             }
         }
-        CommandRegistrationCallback.EVENT.register { dispatcher, context, selection ->
+        CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->
             dispatcher.register(command)
+            dispatcher.register(proceed)
         }
-        init()
-        configRoot = FabricLoader.getInstance().configDir
-        configFile = configRoot.resolve("kriscraft.json")
-        if (configRoot.notExists()) Files.createDirectories(configRoot)
-        if (configFile.notExists()) Files.createFile(configFile)
-        configureInit()
-        Core.logger.info("Waiting for the Deltarune Chapter ${latestDeltarune + 1}")
-    }
-    fun init(){
-        attachmentInit()
-        blockInit()
-        criterionInit()
-        effectInit()
-        itemInit()
-        commandInit()
     }
 }
