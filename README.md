@@ -1,47 +1,59 @@
-
+# KrisCraft
 ## Introduction
+This mod makes moss far more functional in Minecraft!
+It adds new items, gameplay mechanics, crafting recipes, advancements, configuration UI, and custom commands centered around moss.
 
-Make the moss in Minecraft more useful!
+## New Items
+- Moss Bed: Sleep without needing to harvest wool from sheep.
+- Moss Bread: Grants higher hunger restoration and saturation, plus a unique moss mob effect.
+- Moss Burger: Provides even greater hunger and saturation, alongside a dedicated burger mob effect.
 
-Added a lot of items,logics,recipes,advancement,ui and command about moss
+## New Game Mechanics
+- Raw moss blocks can be consumed instantly with no eating animation, without disrupting normal moss block placement behavior.
+- You may also eat moss blocks placed directly on the ground.
 
-## Added Items
+## Crafting Recipes
+- 3 Moss Blocks + 3 Any Planks (shaped recipe) → Moss Bed[^1]
+- 1 Moss Block + 8 Bread (shapeless recipe) → 8 Moss Bread
+- 2 Moss Bread + 1 Any Meat (raw or cooked) → Moss Burger[^2]
 
-- Added Moss Bed,you can sleep without killing sheep
-- Added Moss Bread,you can get more nutrition and saturation,and you will get a MOSS Mob Effect
-- Added Moss Burger,you can get MORE nutrition and saturation,and you will get a BURGER Mob Effect
+## New Advancements
+- Unlock the "KrisCraft" advancement by eating moss.
+- Extra advancements are awarded for sleeping in a Moss Bed, eating Moss Bread, and eating a Moss Burger respectively.
 
-## Added Logics
+## Configuration UI
+- A dedicated config screen accessible via hotkey or ModMenu integration.
+- Navigation style inspired by Deltarune[^3]:
+    - Up / Down arrow keys to move the selection cursor
+    - Left / Right arrow keys to adjust values
+- Press Right Shift to save your changes and sync them to the server (requires server operator permissions).
+- Press ESC to save changes only to your local client config without syncing to the server.
 
-- Now you can use moss directly (Not eating,no animation),and the placing of the moss won't be effected
-- You can also eat moss block on the ground now
+## Custom Commands
+- `/kriscraft config <name> <value>`: Debug-only command. Regular players and server operators can ignore this.
+- `/proceed`: High-risk command; use at your own risk.
 
-## Added recipes
+## Configuration File
+All settings are saved in `gameDir/config/kriscraft.json`.
+You can edit config values via `/kriscraft config <name> <value>`; tab completion for config keys is not yet implemented.
+- `can_eat_moss`: Toggles the ability to eat moss items. Only works when enabled and you are not holding Shift.
+- `can_eat_moss_block`: Toggles the ability to eat placed moss blocks. Only works when enabled and you are not holding Shift.
+- `moss_heal`: Base health restored by consuming moss.
+- `moss_product_heal_base_scale`: Healing multiplier for moss food items.
+  The health restored per tick is calculated as:
+  `moss_heal * moss_product_heal_base_scale * 0.1`[^4]
+  Moss Burger applies a 2x multiplier to this value.
 
-- 3 Moss Block + 3 Any plank(shaped) => Moss Bed
-- 1 Moss Block + 8 Bread(shapeless) => 8 Moss Bread
-- 2 Moss Bread + 1 Any meat => Moss Burger
+## Acknowledgements
+- Deltarune: Original inspiration for the config UI design
+- JetBrains: IntelliJ IDEA IDE and Kotlin language support
+- Zheng fanghao: Contribution of "Zhi Zhanzhishang (The sacrifice of stopping wars)"
+- [Namemc Skin](https://namemc.com/skin/c5e8883a20c16801): Mod icon artwork
 
-## Added advancements
+[^1]: The recipe layout follows standard shaped crafting rules; check your in-game recipe book if you are unsure.
 
-- Get the advancement "KrisCraft" by eating the moss
-- You can also get advancement by sleeping on the moss bed,eating moss bread and eating moss burger
+[^2]: Any raw or cooked meat variant works for this recipe.
 
-## Added UI
+[^3]: "Soul" refers to the UI selection cursor within the config screen.
 
-- Added a configure page,open by using key or ModMenu
-- Operate like in the Deltarune!
-- Sync your change with the server(if you have the perm) by exiting with right shift
-- Only save to the client config file by exiting with esc
-
-## Added command
-
-- /kriscraft config <name> <value> : Only for debugging,if you are the normal player or op,you can ignore it
-- /proceed : Deadly,you can have a try
-
-## Acknowledgements(Everyone who helped this project)
-
-- Deltarune : provided the idea
-- JetBrains : provided the IDEA and the kotlin
-- Zheng fanghao : provided the Zhi Zhanzhishang(The sacrifice of stoping wars)
-- [See this hyperlink](https://namemc.com/skin/c5e8883a20c16801) : provided the icon
+[^4]: Moss Burger doubles the calculated healing amount.
