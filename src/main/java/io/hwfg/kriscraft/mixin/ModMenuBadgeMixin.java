@@ -1,9 +1,14 @@
 package io.hwfg.kriscraft.mixin;
 
 import com.terraformersmc.modmenu.util.mod.Mod;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
+@Restriction(
+        require = @Condition("modmenu")
+)
 @Mixin(Mod.Badge.class)
 public enum ModMenuBadgeMixin {
     KRIS_CRAFT_MOSS(

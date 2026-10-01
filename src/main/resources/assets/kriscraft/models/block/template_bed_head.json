@@ -1,5 +1,5 @@
 {
-  "parent": "block/template_bed",
+  "parent": "kriscraft:block/template_bed",
   "textures": {
     "particle": "minecraft:block/oak_planks",
     "north": "minecraft:block/bed_head_north",

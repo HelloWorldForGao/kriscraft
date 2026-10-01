@@ -8,14 +8,14 @@
     {
       "name" : "AetherAndLumine",
       "contact" : {
-        "email" : "234294308@qq.com"
+        "email" : "io.aetherandlumine@gmail.com"
       }
     }
   ],
   "contact": {
     "sources" : "https://github.com/HelloWorldForGao/kriscraft",
     "issues" : "https://github.com/HelloWorldForGao/kriscraft/issues",
-    "email" : "234294308@qq.com"
+    "email" : "io.aetherandlumine@gmail.com"
   },
   "license": "WTFPL",
   "icon": "assets/kriscraft/Kris.png",
@@ -47,8 +47,7 @@
     "fabricloader": ">=${loader_version}",
     "fabric-language-kotlin": ">=${kotlin_loader_version}",
     "fabric-api": "*",
-    "minecraft": "${minecraft_version}",
-    "modmenu" : ">=${modmenu_version}"
+    "minecraft": "${minecraft_version}"
   },
   "custom" : {
     "modmenu" : {

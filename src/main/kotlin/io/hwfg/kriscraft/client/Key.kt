@@ -15,4 +15,5 @@ val open = KeyMappingHelper.registerKeyMapping(
         keyCategory
     )
 )
+
 fun keyInit() = Unit

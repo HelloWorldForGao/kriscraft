@@ -1,12 +1,13 @@
 {
-  "required" : true,
-  "minVersion" : "0.8",
-  "package" : "io.hwfg.kriscraft.mixin",
-  "compatibilityLevel" : "JAVA_25",
-  "client" : [
+  "required": true,
+  "minVersion": "0.8",
+  "package": "io.hwfg.kriscraft.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
     "ModMenuBadgeMixin"
   ],
-  "injectors" : {
-    "defaultRequire" : 1
-  }
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "plugin": "io.hwfg.kriscraft.mixin.MixinPlugin"
 }

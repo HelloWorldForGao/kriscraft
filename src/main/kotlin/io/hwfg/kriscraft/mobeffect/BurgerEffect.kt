@@ -1,7 +1,7 @@
 package io.hwfg.kriscraft.mobeffect
 
-import io.hwfg.kriscraft.Core.mossHeal
-import io.hwfg.kriscraft.config.configures
+import io.hwfg.kriscraft.config.Config
+import io.hwfg.kriscraft.utils.healFromMoss
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
@@ -18,13 +18,13 @@ class BurgerEffect : MobEffect(MobEffectCategory.BENEFICIAL,0x00FF00) {
         i: Int
     ): Boolean {
         if (livingEntity is ServerPlayer){
-            livingEntity.sendOverlayMessage(
+            if (livingEntity.tickCount % 20 == 0) livingEntity.sendOverlayMessage(
                 Component.translatable("kriscraft.the_sacrifice_of_stoping_wars1")
                     .withStyle(ChatFormatting.RED)
                     .withStyle(ChatFormatting.BOLD)
             )
-            val scale = configures["moss_product_heal_base_scale"]?.asInt ?: 0
-            livingEntity.mossHeal(scale * 0.2F)
+            val scale = Config.forceGet<Float>("product_scale")
+            livingEntity.healFromMoss(scale * 0.2F)
         }
         return super.applyEffectTick(serverLevel, livingEntity, i)
     }

@@ -1,9 +1,9 @@
 package io.hwfg.kriscraft.datagen.advancements
 
-import io.hwfg.kriscraft.Core
 import io.hwfg.kriscraft.mod.negHealCriteria
-import io.hwfg.kriscraft.mod.negHealDeathCriteria
 import io.hwfg.kriscraft.mod.snowgraveDeathCriteria
+import io.hwfg.kriscraft.utils.classes.CountableCondition
+import io.hwfg.kriscraft.utils.classes.SingleCondition
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType
@@ -18,7 +18,6 @@ class Suicide : AdvancementSubProvider {
     companion object{
         lateinit var neg_heal1 : AdvancementHolder
         lateinit var neg_heal10 : AdvancementHolder
-        lateinit var neg_heal_death : AdvancementHolder
         lateinit var snowgrave : AdvancementHolder
     }
     override fun generate(
@@ -41,7 +40,7 @@ class Suicide : AdvancementSubProvider {
             .addCriterion(
                 "how_can_you_see_this",
                 negHealCriteria.createCriterion(
-                    Core.CountableCondition(
+                    CountableCondition(
                         Optional.empty(),
                         1
                     )
@@ -64,35 +63,13 @@ class Suicide : AdvancementSubProvider {
             .addCriterion(
                 "how_can_you_see_this",
                 negHealCriteria.createCriterion(
-                    Core.CountableCondition(
+                    CountableCondition(
                         Optional.empty(),
                         10
                     )
                 )
             )
             .save(output,"kriscraft:neg_heal10")
-        neg_heal_death = Advancement.Builder
-            .advancement()
-            .parent(neg_heal1)
-            .display(
-                Items.POTION,
-                Component.translatable("kriscraft.adv.neg_heal_death.title"),
-                Component.translatable("kriscraft.adv.neg_heal_death.description"),
-                null,
-                AdvancementType.CHALLENGE,
-                true,
-                true,
-                true
-            )
-            .addCriterion(
-                "how_can_you_see_this",
-                negHealDeathCriteria.createCriterion(
-                    Core.SingleCondition(
-                        Optional.empty()
-                    )
-                )
-            )
-            .save(output,"kriscraft:neg_heal_death")
         snowgrave = Advancement.Builder
             .advancement()
             .parent(SleepMoss.sleep1)
@@ -108,7 +85,7 @@ class Suicide : AdvancementSubProvider {
             )
             .addCriterion(
                 "are_you_using_betteradvancements",
-                snowgraveDeathCriteria.createCriterion(Core.SingleCondition(Optional.empty()))
+                snowgraveDeathCriteria.createCriterion(SingleCondition(Optional.empty()))
             )
             .save(output,"kriscraft.snowgrave")
     }

@@ -33,6 +33,7 @@ repositories {
     // for more information about repositories.
     maven("https://maven.terraformersmc.com/") // ModMenu
     maven("https://maven.shedaniel.me/")       // Cloth Config
+    maven("https://maven.fallenbreath.me/releases")
     mavenCentral()
 }
 
@@ -47,6 +48,9 @@ dependencies {
     compileOnly(kotlin("stdlib-jdk8"))
     implementation("com.terraformersmc:modmenu:${project.property("modmenu_version")}")
     //implementation("me.shedaniel.cloth:cloth-config-fabric:18.0.14")
+    implementation("me.fallenbreath:conditional-mixin-fabric:0.6.4")
+    // 打包进你的模组 Jar
+    //include("me.fallenbreath:conditional-mixin-fabric:0.6.4")
 }
 
 fabricApi {

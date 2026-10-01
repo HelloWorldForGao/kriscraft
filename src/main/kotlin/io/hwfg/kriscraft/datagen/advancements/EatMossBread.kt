@@ -1,8 +1,8 @@
 package io.hwfg.kriscraft.datagen.advancements
 
-import io.hwfg.kriscraft.Core
 import io.hwfg.kriscraft.mod.eatMossBreadCriterion
 import io.hwfg.kriscraft.mod.mossBread
+import io.hwfg.kriscraft.utils.classes.CountableCondition
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType
@@ -39,7 +39,7 @@ class EatMossBread : AdvancementSubProvider{
             .addCriterion(
                 "are_you_using_betteradvancement",
                 eatMossBreadCriterion.createCriterion(
-                    Core.CountableCondition(
+                    CountableCondition(
                         Optional.empty(),
                         1
                     )
@@ -65,7 +65,7 @@ class EatMossBread : AdvancementSubProvider{
             .addCriterion(
                 "are_you_using_betteradvancement",
                 eatMossBreadCriterion.createCriterion(
-                    Core.CountableCondition(
+                    CountableCondition(
                         Optional.empty(),
                         10
                     )
@@ -91,7 +91,7 @@ class EatMossBread : AdvancementSubProvider{
             .addCriterion(
                 "are_you_using_betteradvancement",
                 eatMossBreadCriterion.createCriterion(
-                    Core.CountableCondition(
+                    CountableCondition(
                         Optional.empty(),
                         100
                     )
@@ -117,7 +117,7 @@ class EatMossBread : AdvancementSubProvider{
             .addCriterion(
                 "are_you_using_betteradvancement",
                 eatMossBreadCriterion.createCriterion(
-                    Core.CountableCondition(
+                    CountableCondition(
                         Optional.empty(),
                         30000
                     )

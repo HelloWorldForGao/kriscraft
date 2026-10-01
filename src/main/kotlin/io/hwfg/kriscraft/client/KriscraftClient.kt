@@ -2,8 +2,11 @@ package io.hwfg.kriscraft.client
 
 import io.hwfg.kriscraft.Core
 import io.hwfg.kriscraft.Kriscraft
+import io.hwfg.kriscraft.client.screen.ConfigScreen
+import io.hwfg.kriscraft.client.screen.DeltaruneLike
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
+import net.minecraft.client.KeyMapping
 import net.minecraft.client.Minecraft
 
 class KriscraftClient : ClientModInitializer {
@@ -14,7 +17,8 @@ class KriscraftClient : ClientModInitializer {
         screenInit()
         ClientTickEvents.END_CLIENT_TICK.register { p0 ->
             if (p0.screen is ConfigScreen) return@register
-            if (open.consumeClick()) Minecraft.getInstance().setScreen(screen)
+            //if (openTest.consumeClick()) Minecraft.getInstance().setScreen(screen)
+            if (open.consumeClick()) Minecraft.getInstance().setScreen(ConfigScreen)
         }
         Core.logger.info("Playing the Deltarune Chapter ${Kriscraft.latestDeltarune}")
     }

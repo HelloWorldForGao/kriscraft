@@ -1,6 +1,6 @@
 package io.hwfg.kriscraft.item
 
-import io.hwfg.kriscraft.Core.tryToTrigger
+import io.hwfg.kriscraft.utils.negHealTrigger
 import io.hwfg.kriscraft.mod.eatMossBreadCount
 import io.hwfg.kriscraft.mod.eatMossBreadCriterion
 import io.hwfg.kriscraft.mod.mossyEffect
@@ -61,7 +61,7 @@ class MossBread : Item(
             p2,
             eatMossBreadCount
         )
-        p2.tryToTrigger()
+        p2.negHealTrigger(true)
         return super.finishUsingItem(p0, p1, p2)
     }
 }

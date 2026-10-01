@@ -1,6 +1,6 @@
 package io.hwfg.kriscraft.item
 
-import io.hwfg.kriscraft.Core.tryToTrigger
+import io.hwfg.kriscraft.utils.negHealTrigger
 import io.hwfg.kriscraft.mod.burgerEffect
 import io.hwfg.kriscraft.mod.eatMossBreadCount
 import io.hwfg.kriscraft.mod.eatMossBreadCriterion
@@ -65,7 +65,7 @@ class MossBurger : Item(
             eatMossBreadCount,
             2
         )
-        entity.tryToTrigger()
+        entity.negHealTrigger(true)
         return res
     }
 }

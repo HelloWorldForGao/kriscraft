@@ -1,8 +1,9 @@
 package io.hwfg.kriscraft.mod
 
-import io.hwfg.kriscraft.Core
 import io.hwfg.kriscraft.mossbed.MossBedBlock
 import io.hwfg.kriscraft.mossbed.MossBedBlockEntity
+import io.hwfg.kriscraft.utils.registerBlock
+import io.hwfg.kriscraft.utils.registerBlockEntity
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents
 import net.minecraft.world.item.CreativeModeTabs
 import net.minecraft.world.item.DyeColor
@@ -12,14 +13,14 @@ import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
 
 @JvmField
-val mossBedBlock = Core.registerBlock(
+val mossBedBlock = registerBlock(
     "moss_bed",
     { p0 -> MossBedBlock(DyeColor.GREEN, p0) },
     BlockBehaviour.Properties.ofFullCopy(Blocks.GREEN_BED)
         .sound(SoundType.MOSS)
 )
 @JvmField
-val mossBedEntity = Core.registerBlockEntity(
+val mossBedEntity = registerBlockEntity(
     "moss_bed",
     { p0, p1 -> MossBedBlockEntity(p0, p1) },
     mossBedBlock

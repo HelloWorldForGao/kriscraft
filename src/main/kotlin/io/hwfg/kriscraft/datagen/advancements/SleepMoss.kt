@@ -1,9 +1,9 @@
 package io.hwfg.kriscraft.datagen.advancements
 
-import io.hwfg.kriscraft.Core
 import io.hwfg.kriscraft.datagen.advancements.MainLine.Companion.krisRoot
 import io.hwfg.kriscraft.mod.mossBedBlock
 import io.hwfg.kriscraft.mod.sleepMossCriterion
+import io.hwfg.kriscraft.utils.classes.CountableCondition
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType
@@ -40,7 +40,7 @@ class SleepMoss : AdvancementSubProvider {
             .addCriterion(
                 "default",
                 sleepMossCriterion.createCriterion(
-                    Core.CountableCondition(
+                    CountableCondition(
                         Optional.empty(),
                         1
                     )
@@ -65,7 +65,7 @@ class SleepMoss : AdvancementSubProvider {
             .addCriterion(
                 "default",
                 sleepMossCriterion.createCriterion(
-                    Core.CountableCondition(
+                    CountableCondition(
                         Optional.empty(),
                         5
                     )
@@ -90,7 +90,7 @@ class SleepMoss : AdvancementSubProvider {
             .addCriterion(
                 "default",
                 sleepMossCriterion.createCriterion(
-                    Core.CountableCondition(
+                    CountableCondition(
                         Optional.empty(),
                         31
                     )
@@ -115,7 +115,7 @@ class SleepMoss : AdvancementSubProvider {
             .addCriterion(
                 "default",
                 sleepMossCriterion.createCriterion(
-                    Core.CountableCondition(
+                    CountableCondition(
                         Optional.empty(),
                         365
                     )

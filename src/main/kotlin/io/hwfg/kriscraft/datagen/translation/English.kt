@@ -5,6 +5,7 @@ import io.hwfg.kriscraft.mod.mossBedBlock
 import io.hwfg.kriscraft.mod.mossBread
 import io.hwfg.kriscraft.mod.mossBurger
 import io.hwfg.kriscraft.mod.mossyEffect
+import io.hwfg.kriscraft.utils.*
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.core.HolderLookup
@@ -15,9 +16,9 @@ class English(
     registryLookup : CompletableFuture<HolderLookup.Provider>
 ) : FabricLanguageProvider(output,"en_us",registryLookup) {
     val basic: MutableMap<String, String> = mutableMapOf(
-        "kriscraft.name" to "Kris craft",
+        "kriscraft.name" to "KrisCraft",
         "kriscraft.description" to "Make the moss in Minecraft more useful",
-        "kriscraft.ui" to "Kris craft : Config page",
+        "kriscraft.ui" to "KrisCraft : Config page",
         "kriscraft.ui.tip" to "Operate like in the Deltarune!If you has the permission,you can exit by pressing right shift to sync the config with the server",
         "kriscraft.true" to "Yes",
         "kriscraft.false" to "No",
@@ -26,22 +27,12 @@ class English(
     val modMenu = mutableMapOf(
         "modmenu.badge.moss" to "Moss",
         "modmenu.badge.deltarune" to "Deltarune",
-        "kriscraft.modmenu.general_idea" to "General Idea",
-        "kriscraft.modmenu.genshin" to "Genshin Impact",
+        "kriscraft.modmenu.general_idea" to "General Idea(where the idea from)",
+        "kriscraft.modmenu.genshin" to "Genshin Impact(also my favourite game)",
         "kriscraft.modmenu.github" to "Github",
         "kriscraft.modmenu.gitee" to "Gitee",
-        "modmenu.nameTranslation.kriscraft" to "Kris craft",
+        "modmenu.nameTranslation.kriscraft" to "KrisCraft",
         "modmenu.descriptionTranslation.kriscraft" to "Make the moss in Minecraft more useful"
-    )
-    val ui = mutableMapOf(
-        "kriscraft.key.can_eat_moss" to "Can eat moss(Item)",
-        "kriscraft.key.can_eat_moss_block" to "Can eat moss(Block)",
-        "kriscraft.key.moss_heal" to "Moss heal number",
-        "kriscraft.key.moss_product_heal_base_scale" to "Moss product heal number's base scale",
-        "kriscraft.ui.tip.can_eat_moss" to "Can eat moss(Item).Warn:when you press shift,whether this is enabled or not,you won't eat moss",
-        "kriscraft.ui.tip.can_eat_moss_block" to "Can eat moss(Block).Warn:when you press shift,whether this is enabled or not,you won't eat moss",
-        "kriscraft.ui.tip.moss_heal" to "How much does a moss heal.Will tips you when eating moss if this value >= 20",
-        "kriscraft.ui.tip.moss_product_heal_base_scale" to "The scale of the moss bread's heal number,details see the README"
     )
     val zhiZhanZhiShang = mutableMapOf(
         "kriscraft.the_sacrifice_of_stoping_wars1" to "The Leidewang will land the Earth after 3 hours",
@@ -58,16 +49,30 @@ class English(
         "death.attack.snowgrave.player" to $$"%2$s released the snowgrave to %1$s "
     )
     val key = mutableMapOf(
-        "key.category.kriscraft.default" to "Kris craft",
+        "key.category.kriscraft.default" to "KrisCraft",
         "kriscraft.key.open" to "Open Config Page"
     )
     val command = mapOf(
-        "kriscraft.config.command_executed" to $$"%1$s have been set %2$s",
-        "kriscraft.no_perm" to "No permission syncing it.Avoid seeing this by using Esc"
+        "kriscraft.del" to "Do you want to delete all the KrisCraft data?Delete by using /kriscraft data del proceed .",
+        "kriscraft.del.finish" to "All the KrisCraft data has been deleted!"
+    )
+    val sync = mapOf(
+        "kriscraft.no_perm" to "No permission to sync to the server.Close with ESC to avoid seeing this warn again.",
+        "kriscraft.sync.error" to $$"A error occurred when syncing : %1$s",
+        "kriscraft.sync.finish" to "Syncing finished!",
+        "kriscraft.different" to $$"Client-server data is different,client:%1$s,server:%2$s",
+        "kriscraft.same" to "Client-server data is same"
+    )
+    val getData = mapOf(
+        "kriscraft.dataget.moss_count" to $$"You have ate %1$s moss(es).",
+        "kriscraft.dataget.sleep_moss_count" to $$"You have jumped the night on the moss bed for %1$s time(s).",
+        "kriscraft.dataget.eat_moss_bread_count" to $$"You have ate %1$s moss bread(s).",
+        "kriscraft.dataget.eat_moss_burger_count" to $$"You have ate %1$s moss burger(s).",
+        "kriscraft.dataget.neg_heal_count" to $$"You have found out the Easter-Egg of neg-heal and suffered from neg-heal for %1$s time(s).",
     )
     val advMainLine = mapOf(
         "kris_root" to listOf(
-            "Kris craft",
+            "KrisCraft",
             "Make the moss in Minecraft more useful"
         ),
         "kris10" to listOf(
@@ -86,7 +91,7 @@ class English(
     val advSleepMoss = mapOf(
         "sleep_moss1" to listOf(
             "Sleep with moss",
-            "Sleep for one moss-night first,then do anything else tomorrow"
+            "Sleep for one night first,then do anything else tomorrow"
         ),
         "sleep_moss5" to listOf(
             "Monday to Friday",
@@ -98,7 +103,7 @@ class English(
         ),
         "sleep_moss365" to listOf(
             "One year passed",
-            "You can delete this world"
+            "You can delete this world,because you are so unlucky."
         )
     )
     val advEatMossBread = mapOf(
@@ -115,7 +120,7 @@ class English(
             "Eat 100 Moss bread"
         ),
         "eat_moss_bread30000" to listOf(
-            "Kris is playing your account",
+            "Even Kris can't eat so much moss bread",
             "Eat 30000 Moss bread"
         )
     )
@@ -128,31 +133,32 @@ class English(
             "Taught but not change",
             "Negative heal for 10 times"
         ),
-        "neg_heal_death" to listOf(
-            "Deadly moss",
-            "The moss was harmful"
-        ),
         "snowgrave" to listOf(
             "Quick-frozen food",
-            "Bore the damage from the snowgrave"
+            "Try to \"proceed\",and then what will happen?"
         )
     )
-    fun TranslationBuilder.addMap(vararg p0 : Map<String, String>){
-        for (k in p0){
-            for ((i, j) in k) {
-                this.add(i, j)
-            }
-        }
-    }
-    fun TranslationBuilder.addAdvancement(vararg p0 : Map<String, List<String>>){
-        for (k in p0){
-            for ((i, j) in k) {
-                val key = "kriscraft.adv.$i"
-                this.add("$key.title", j[0])
-                this.add("$key.description", j[1])
-            }
-        }
-    }
+    val config = mapOf(
+        "moss_heal" to listOf(
+            "Moss heal",
+            "How many will a moss heal"
+        ),
+        "product_scale" to listOf(
+            "Moss products' healing scale",
+            "The scale of the moss bread,2 times on moss burger(all 1 tps)"
+        ),
+        "can_eat_moss" to listOf(
+            "Can eat moss",
+            "If you can eat moss.Whether you can eat moss or not,won't effect the eating of the products"
+        ),
+        "proceed" to listOf(
+            "Proceed",
+            "Deadly"
+        )
+    )
+    val ui = mapOf(
+        "kriscraft.ui.proceed" to "Press right arrow ->"
+    )
     override fun generateTranslations(
         lookup: HolderLookup.Provider,
         builder: TranslationBuilder
@@ -160,17 +166,22 @@ class English(
         builder.addMap(
             basic,
             modMenu,
-            ui,
             zhiZhanZhiShang,
             damageType,
             key,
-            command
+            command,
+            sync,
+            getData,
+            ui
         )
         builder.addAdvancement(
             advMainLine,
             advSleepMoss,
             advEatMossBread,
             advSuicide
+        )
+        builder.addConfigs(
+            config
         )
         builder.add(
             mossBread,

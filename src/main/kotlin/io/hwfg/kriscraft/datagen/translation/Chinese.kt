@@ -5,6 +5,7 @@ import io.hwfg.kriscraft.mod.mossBedBlock
 import io.hwfg.kriscraft.mod.mossBread
 import io.hwfg.kriscraft.mod.mossBurger
 import io.hwfg.kriscraft.mod.mossyEffect
+import io.hwfg.kriscraft.utils.*
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.core.HolderLookup
@@ -26,22 +27,12 @@ class Chinese(
     val modMenu = mutableMapOf(
         "modmenu.badge.moss" to "苔藓",
         "modmenu.badge.deltarune" to "三角符文",
-        "kriscraft.modmenu.general_idea" to "源灵感",
-        "kriscraft.modmenu.genshin" to "源神",
+        "kriscraft.modmenu.general_idea" to "源灵感（灵感来源）",
+        "kriscraft.modmenu.genshin" to "原神（也是我爱玩的）",
         "kriscraft.modmenu.github" to "Github",
         "kriscraft.modmenu.gitee" to "Gitee",
         "modmenu.nameTranslation.kriscraft" to "Kris工艺",
         "modmenu.descriptionTranslation.kriscraft" to "使MC的苔藓更有用"
-    )
-    val ui = mutableMapOf(
-        "kriscraft.key.can_eat_moss" to "可以吃苔藓（物品）",
-        "kriscraft.key.can_eat_moss_block" to "可以吃苔藓（方块）",
-        "kriscraft.key.moss_heal" to "苔藓回复量",
-        "kriscraft.key.moss_product_heal_base_scale" to "苔藓制品基础回复倍率",
-        "kriscraft.ui.tip.can_eat_moss" to "是否可以吃苔藓（物品）。注意：当按shift时无论此项是否开启都不会吃苔藓",
-        "kriscraft.ui.tip.can_eat_moss_block" to "是否可以吃苔藓（方块）。注意：当按shift时无论此项是否开启都不会吃苔藓",
-        "kriscraft.ui.tip.moss_heal" to "吃一个苔藓回复多少。大于等于20时吃苔藓有特殊提示",
-        "kriscraft.ui.tip.moss_product_heal_base_scale" to "苔藓面包的回复倍率，详情见README"
     )
     val zhiZhanZhiShang = mutableMapOf(
         "kriscraft.the_sacrifice_of_stoping_wars1" to "雷德王还有3个小时降临地球",
@@ -62,8 +53,22 @@ class Chinese(
         "kriscraft.key.open" to "打开配置页面"
     )
     val command = mapOf(
-        "kriscraft.config.command_executed" to $$"%1$s 被设为了 %2$s",
-        "kriscraft.no_perm" to "权限不足无法同步至服务器。使用Esc退出以避免再次看到此提示"
+        "kriscraft.del" to "您确定要删除所有Kris工艺数据吗？使用/kriscraft data del proceed以删除",
+        "kriscraft.del.finish" to "Kris工艺数据已经全部删除！"
+    )
+    val sync = mapOf(
+        "kriscraft.no_perm" to "权限不足无法同步至服务器。使用Esc退出以避免再次看到此提示",
+        "kriscraft.sync.error" to $$"同步时出现错误：%1$s",
+        "kriscraft.sync.finish" to "同步完成！",
+        "kriscraft.different" to $$"数据不同，客户端：%1$s，服务端：%2$s",
+        "kriscraft.same" to "双端数据相同"
+    )
+    val getData = mapOf(
+        "kriscraft.dataget.moss_count" to $$"你已经吃了%1$s块苔藓了",
+        "kriscraft.dataget.sleep_moss_count" to $$"你已经在苔藓床上跳过%1$s次夜晚了",
+        "kriscraft.dataget.eat_moss_bread_count" to $$"你已经吃了%1$s块苔藓面包了",
+        "kriscraft.dataget.eat_moss_burger_count" to $$"你已经吃了%1$s块苔藓汉堡了",
+        "kriscraft.dataget.neg_heal_count" to $$"你已经发现了负治疗彩蛋并且受到过%1$s次负治疗",
     )
     val advMainLine = mapOf(
         "kris_root" to listOf(
@@ -137,22 +142,27 @@ class Chinese(
             "遭受一次雪葬的重创"
         )
     )
-    fun TranslationBuilder.addMap(vararg p0 : Map<String, String>){
-        for (k in p0){
-            for ((i, j) in k) {
-                this.add(i, j)
-            }
-        }
-    }
-    fun TranslationBuilder.addAdvancement(vararg p0 : Map<String, List<String>>){
-        for (k in p0){
-            for ((i, j) in k) {
-                val key = "kriscraft.adv.$i"
-                this.add("$key.title", j[0])
-                this.add("$key.description", j[1])
-            }
-        }
-    }
+    val config = mapOf(
+        "moss_heal" to listOf(
+            "苔藓回复量",
+            "吃一个苔藓回复多少"
+        ),
+        "product_scale" to listOf(
+            "苔藓制品倍率",
+            "苔藓面包的倍率，苔藓汉堡x2（都是一秒回一次）"
+        ),
+        "can_eat_moss" to listOf(
+            "可以食用苔藓",
+            "是否可以吃苔藓，不影响苔藓制品"
+        ),
+        "proceed" to listOf(
+            "继续前进",
+            "致命"
+        )
+    )
+    val ui = mapOf(
+        "kriscraft.ui.proceed" to "按下右方向键->"
+    )
     override fun generateTranslations(
         lookup: HolderLookup.Provider,
         builder: TranslationBuilder
@@ -160,17 +170,22 @@ class Chinese(
         builder.addMap(
             basic,
             modMenu,
-            ui,
             zhiZhanZhiShang,
             damageType,
             key,
-            command
+            command,
+            sync,
+            getData,
+            ui
         )
         builder.addAdvancement(
             advMainLine,
             advSleepMoss,
             advEatMossBread,
             advSuicide
+        )
+        builder.addConfigs(
+            config
         )
         builder.add(
             mossBread,
