@@ -3,7 +3,7 @@ package io.hwfg.kriscraft.utils.classes
 import com.mojang.serialization.Codec
 import io.hwfg.kriscraft.utils.addAndGet
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType
-import net.minecraft.advancements.criterion.SimpleCriterionTrigger
+import net.minecraft.advancements.triggers.SimpleCriterionTrigger
 import net.minecraft.server.level.ServerPlayer
 
 class CountableCriterion : SimpleCriterionTrigger<CountableCondition>() {

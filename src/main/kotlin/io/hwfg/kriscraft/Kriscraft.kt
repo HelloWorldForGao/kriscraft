@@ -4,26 +4,16 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.hwfg.kriscraft.config.Config
 import io.hwfg.kriscraft.config.SubConfigData
-import io.hwfg.kriscraft.utils.addAndGet
-import io.hwfg.kriscraft.utils.healFromMoss
-import io.hwfg.kriscraft.mod.command
-import io.hwfg.kriscraft.mod.commandInit
 import io.hwfg.kriscraft.mod.*
-import io.hwfg.kriscraft.mossbed.MossBedBlockEntity
 import io.hwfg.kriscraft.payload.ClientUpload
 import io.hwfg.kriscraft.payload.Proceed
 import io.hwfg.kriscraft.payload.ServerDownload
-import io.hwfg.kriscraft.utils.addAttached
-import io.hwfg.kriscraft.utils.applyData
-import io.hwfg.kriscraft.utils.download
-import io.hwfg.kriscraft.utils.hurt
-import io.hwfg.kriscraft.utils.negHealTrigger
+import io.hwfg.kriscraft.utils.*
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.fabricmc.fabric.api.event.player.UseItemCallback
@@ -157,7 +147,7 @@ class Kriscraft : ModInitializer {
         }
         EntitySleepEvents.START_SLEEPING.register { entity, pos ->
             if (entity is ServerPlayer){
-                if (entity.level().getBlockEntity(pos) is MossBedBlockEntity){
+                if (entity.level().getBlockState(pos).`is`(mossBedBlock)){
                     sleepMossCriterion.trigger(
                         entity,
                         entity.addAndGet(

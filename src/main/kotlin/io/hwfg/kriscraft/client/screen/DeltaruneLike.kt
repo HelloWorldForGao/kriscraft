@@ -164,7 +164,7 @@ open class DeltaruneLike(
     }
     fun escape(){
         save()
-        Minecraft.getInstance().setScreen(null)
+        Minecraft.getInstance().gui.setScreen(null)
     }
 
     override fun keyReleased(event: KeyEvent): Boolean {
