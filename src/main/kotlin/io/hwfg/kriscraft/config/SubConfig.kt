@@ -2,9 +2,6 @@ package io.hwfg.kriscraft.config
 
 import com.google.gson.annotations.SerializedName
 import io.hwfg.kriscraft.client.screen.ConfigHandler
-import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphicsExtractor
-import net.minecraft.network.chat.Component
 
 open class SubConfig<A>(
     @SerializedName("trans") val translationKey : String?,

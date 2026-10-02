@@ -1,6 +1,5 @@
 package io.hwfg.kriscraft.mod
 
-import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import io.hwfg.kriscraft.config.Config
 import io.hwfg.kriscraft.utils.getData
@@ -15,7 +14,6 @@ import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.permissions.Permissions
 import net.minecraft.world.damagesource.DamageSource
-import java.util.concurrent.CompletableFuture
 
 
 val command: LiteralArgumentBuilder<CommandSourceStack> = Commands.literal("kriscraft")

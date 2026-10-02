@@ -4,14 +4,11 @@ import io.hwfg.kriscraft.config.Config
 import io.hwfg.kriscraft.mod.negDamage
 import io.hwfg.kriscraft.mod.negHealCount
 import io.hwfg.kriscraft.mod.negHealCriteria
-import io.hwfg.kriscraft.mod.timer
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType
 import net.minecraft.ChatFormatting
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.Style
 import net.minecraft.resources.ResourceKey
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.damagesource.DamageSource
@@ -45,7 +42,7 @@ fun ServerPlayer.healFromMoss(scale : Float = 1F,ignoreTimer : Boolean = false){
 }
 
 fun ServerPlayer.improvedHeal(num : Float,ignoreTimer : Boolean = false){
-    if (this.getAttached(timer) != 10 && !ignoreTimer) return
+    if (this.tickCount % 20 != 10 && !ignoreTimer) return
     if (num >= 20) this.sendSystemMessage(
         Component.translatable("kriscraft.eatmoss")
             .withStyle(ChatFormatting.GREEN),

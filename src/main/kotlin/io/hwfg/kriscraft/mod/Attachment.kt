@@ -35,12 +35,6 @@ import net.minecraft.resources.Identifier
     Codec.INT
 )
 
-@JvmField val timer = createAttachment(
-    "kriscraft",
-    "timer",
-    Codec.INT
-)
-
 fun <A : Any>createAttachment(
     namespace : String,
     name : String,
@@ -50,7 +44,6 @@ fun <A : Any>createAttachment(
 ){p0 ->
     p0.persistent(type)
     p0.copyOnDeath()
-    p0.buildAndRegister(Identifier.fromNamespaceAndPath(namespace,name))
 }
 
 fun attachmentInit() = Unit

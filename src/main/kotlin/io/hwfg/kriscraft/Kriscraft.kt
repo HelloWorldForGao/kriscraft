@@ -172,12 +172,6 @@ class Kriscraft : ModInitializer {
             dispatcher.register(command)
             dispatcher.register(proceed)
         }
-        ServerTickEvents.END_SERVER_TICK.register { server ->
-            for (i in server.playerList.players){
-                i.addAttached(timer,1)
-                if (i.getAttached(timer) == 20) i.setAttached(timer,0)
-            }
-        }
         ServerPlayNetworking.registerGlobalReceiver(
             ClientUpload.type
         ){p0,p1 ->

@@ -1,8 +1,6 @@
 package io.hwfg.kriscraft.client.screen
 
 import com.google.gson.reflect.TypeToken
-import com.mojang.authlib.minecraft.client.MinecraftClient
-import io.hwfg.kriscraft.client.screen.handlers.IntHandler
 import io.hwfg.kriscraft.config.SubConfig
 import io.hwfg.kriscraft.config.SubConfigData
 import io.hwfg.kriscraft.utils.applyData
@@ -19,9 +17,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.entity.player.Player
 import org.lwjgl.glfw.GLFW
-import java.nio.file.Files
 import java.nio.file.Path
 
 open class DeltaruneLike(
@@ -33,58 +29,7 @@ open class DeltaruneLike(
     val shiftQuitEvent : (LocalPlayer) -> Unit = {},
     val textDistance : Int = 30
 ) : Screen(title) {
-    companion object{
-        val testList : MutableList<SubConfig<*>> = mutableListOf(
-            SubConfig(
-                "hwfg.test1",
-                "test1",
-                "hwfg.test1",
-                114514,
-                IntHandler
-            ),
-            SubConfig(
-                "hwfg.test2",
-                "test2",
-                "hwfg.test2",
-                1919810,
-                IntHandler
-            ),
-            SubConfig(
-                "hwfg.test3",
-                "test3",
-                "hwfg.test3",
-                33550336,
-                IntHandler
-            ),
-            SubConfig(
-                "hwfg.test4",
-                "test4",
-                "hwfg.test4",
-                114514,
-                IntHandler
-            ),
-            SubConfig(
-                "hwfg.test5",
-                "test5",
-                "hwfg.test5",
-                1919810,
-                IntHandler
-            ),
-            SubConfig(
-                "hwfg.test6",
-                "test6",
-                "hwfg.test6",
-                33550336,
-                IntHandler
-            )
-        )
-        val testScreen = DeltaruneLike(
-            Component.literal("test"),
-            Component.literal("sub_test"),
-            testList
-        )
-    }
-    open val SOUL = Identifier.fromNamespaceAndPath(
+    open val soul = Identifier.fromNamespaceAndPath(
         "kriscraft",
         "textures/soul.png"
     )
@@ -171,7 +116,7 @@ open class DeltaruneLike(
         val soulPos = ptr % 6
         graphics.blit(
             RenderPipelines.GUI_TEXTURED,
-            SOUL,
+            soul,
             50,
             centerY(calcY(soulPos),16),
             0F,

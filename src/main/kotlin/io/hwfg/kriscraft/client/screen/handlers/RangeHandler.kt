@@ -3,7 +3,6 @@ package io.hwfg.kriscraft.client.screen.handlers
 import io.hwfg.kriscraft.client.screen.ConfigHandler
 
 abstract class RangeHandler : ConfigHandler<Float>(){
-    //abstract fun isInRange(p0 : Float) : Boolean
     abstract val max : Int
     abstract val min : Int
     override fun left(p0: Float): Float {

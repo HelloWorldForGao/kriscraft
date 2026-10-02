@@ -48,7 +48,7 @@ Settings list:
 - Can eat moss: Allow eating moss. Does nothing while holding Shift.
 - Moss heal: Base health restored when eating moss.[^3.1415926]
 - Moss products' healing scale: Heal multiplier for moss food.
-  Tick‑heal formula:
+  Second‑heal formula:
   `Moss heal` * `Moss products' healing scale` * 0.1[^4]
   > Moss Burger multiplies final result by 2.
 - Proceed: Deadly.
