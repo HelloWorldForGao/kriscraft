@@ -5,8 +5,8 @@
 
 ## 新增物品
 - 苔藓床：不用羊毛也可以睡觉
-- 苔藓面包：不错的饥饿与饱和度，附加苔藓效果
-- 苔藓汉堡：更高饥饿、饱和度，附加汉堡效果
+- 苔藓面包：不错的饥饿与饱和度，附加“苔藓”效果
+- 苔藓汉堡：更高饥饿、饱和度，附加“汉堡”效果
 
 ## 游戏机制
 - 手持苔藓方块可以直接瞬间吃掉，没有进食动画；放置方块功能不受影响。
@@ -23,30 +23,38 @@
 
 ## 配置界面
 快捷键或ModMenu打开，UI风格参考Deltarune。[^3]
-- ↑↓方向键：移动光标
+- ↑↓方向键：移动“灵魂”（光标）
 - ←→方向键：修改数值
 - 右Shift：保存并同步配置到服务端（需要OP权限）
 - ESC：仅保存本地客户端，不同步服务器
 
+这个界面在我的1440x900屏幕上完美运行，但是在其他屏幕上可能导致bug。
+
+我目前没有能力修复此bug。
+
+如果你遇到此bug，你可以修改界面尺寸或换块屏幕。
+
 ## 命令
-- `/kriscraft config <name> <value>`：调试专用，普通玩家不用管
-- `/proceed`：致敬Deltarune雪葬(Snowgrave)，它是致命的，请自行承担后果
+- `/kriscraft data get`: 获取你的Kris工艺数据，像你吃了多少苔藓
+- `/kriscraft data del`: 删除你的Kris工艺数据
+- `/kriscraft data server_data`: 获取服务器上的Kris工艺配置
+- `/proceed`：致敬Deltarune雪葬(Snowgrave)，致命，请自行承担后果
 
 ## 配置文件
 路径：`config/kriscraft.json`
 游戏内可以用 `/kriscraft config <name> <value>` 修改，暂不支持Tab补全。
 
 配置项：
-- `can_eat_moss`：允许食用苔藓物品，按住Shift无效
-- `can_eat_moss_block`：允许食用地上的苔藓方块，按住Shift无效
-- `moss_heal`：吃苔藓回复的基础生命值[^3.1415926]
-- `moss_product_heal_base_scale`：苔藓食物治疗倍率
+- 可以食用苔藓：允许食用苔藓，按住Shift无效
+- 苔藓回复量：吃苔藓回复的基础生命值[^3.1415926]
+- 苔藓制品倍率：苔藓食物治疗倍率
   每刻治疗计算公式：
-  `moss_heal * moss_product_heal_base_scale * 0.1`[^4]
+  `苔藓回复量` * `苔藓制品倍率` * 0.1[^4]
   > 苔藓汉堡会在此结果再乘以2
+- 继续前进：致命
 
 ## 致谢
-- Deltarune — 配置界面灵感，`/proceed` 对应雪葬路线
+- Deltarune — 灵感来源
 - JetBrains — IntelliJ IDEA、Kotlin语言
 - Zheng fanghao —《止战之殇》相关贡献
 - [Namemc Skin](https://namemc.com/skin/c5e8883a20c16801)：旧版模组图标素材
